@@ -87,4 +87,8 @@ export class TodoService {
     return this.http.get(`${this.apiUrl}/timeline/${user_id}/items`);
   }
 
+  getTimelineDtoMap(user_id) {
+    return this.http.get(`${this.apiUrl}/timeline/${user_id}/items/month`);
+  }
+
 }
