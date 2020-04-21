@@ -46,8 +46,9 @@ export class ForgotPasswordComponent implements OnInit {
       data => {
         console.log(data);
         this.data = data;
+        console.log(this.data)
         this.alertService.success(this.data.text, true);
-        // this.router.navigate(['/home']);
+        this.router.navigate(['/home']);
       }, error => {
         // console.log(error);
         // this.alertService.error(error);
