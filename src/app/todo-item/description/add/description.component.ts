@@ -1,15 +1,16 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TodoService} from '../../services/todo.service';
 import {Description} from '../../model/description';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-description',
   templateUrl: './description.component.html',
   styleUrls: ['./description.component.css']
 })
-export class DescriptionComponent implements OnInit {
+export class DescriptionComponent implements OnInit, OnDestroy {
 
   descriptionForm: FormGroup;
   loading = false;
@@ -22,6 +23,7 @@ export class DescriptionComponent implements OnInit {
   update_description_id: number;
   data: any;
   closeResult: string;
+  subscription$: Subscription[] = [];
 
   @Input() public item_id: number;
   @Input() todo_id: string;
@@ -36,6 +38,14 @@ export class DescriptionComponent implements OnInit {
   ngOnInit() {
     this.getDescriptionForm();
     this.getItemDescriptions(this.item_id);
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription$) {
+      this.subscription$.forEach((s) => {
+        s.unsubscribe();
+      });
+    }
   }
 
   get f() {
@@ -64,14 +74,14 @@ export class DescriptionComponent implements OnInit {
     this.description = {
       text: this.descriptionForm.value.description
     };
-    this.todoService.createItemDescription(this.description, this.todo_id, item_id, 'item').subscribe(data => {
+    this.subscription$.push(this.todoService.createItemDescription(this.description, this.todo_id, item_id, 'item').subscribe(data => {
       this.data = data;
       this.descriptionForm.reset();
       this.loading = false;
       this.addDescription(this.data.id);
       this.getItemDescriptions(item_id);
       this.modalService.dismissAll();
-    });
+    }));
   }
 
   addEditDescription(description_id) {
@@ -89,9 +99,9 @@ export class DescriptionComponent implements OnInit {
   }
 
   getItemDescriptions(item_id) {
-    this.todoService.getItemDescriptions(this.todo_id, item_id).subscribe(data => {
+    this.subscription$.push(this.todoService.getItemDescriptions(this.todo_id, item_id).subscribe(data => {
       this.itemDescriptions = data;
-    });
+    }));
   }
 
   get d() {

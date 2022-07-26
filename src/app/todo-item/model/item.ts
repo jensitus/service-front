@@ -2,7 +2,7 @@ import {Description} from './description';
 import {NgbDateStruct} from '@ng-bootstrap/ng-bootstrap';
 
 export class Item {
-  id: number;
+  id?: number;
   name: string;
   done: boolean;
   description: Description;

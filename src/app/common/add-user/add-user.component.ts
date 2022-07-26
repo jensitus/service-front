@@ -1,16 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {TodoService} from '../../todo-item/services/todo.service';
 import {UserService} from '../../auth/services/user.service';
 import {User} from '../../auth/model/user';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-add-user',
   templateUrl: './add-user.component.html',
   styleUrls: ['./add-user.component.css']
 })
-export class AddUserComponent implements OnInit {
+export class AddUserComponent implements OnInit, OnDestroy {
 
   loading = false;
   submitted = false;
@@ -24,6 +25,7 @@ export class AddUserComponent implements OnInit {
   selectedUser: User;
   @Input() todo_title: string;
   showAF = false;
+  subscription$: Subscription[] = [];
 
   constructor(
     private todoService: TodoService,
@@ -35,6 +37,14 @@ export class AddUserComponent implements OnInit {
   ngOnInit() {
     this.getUserForTodo();
     this.getAddUserForm();
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription$) {
+      this.subscription$.forEach((s) => {
+        s.unsubscribe();
+      });
+    }
   }
 
   showAddUserForm() {
@@ -52,10 +62,8 @@ export class AddUserComponent implements OnInit {
       return;
     }
     this.loading = true;
-    console.log('addUserForm', this.addUserForm);
     this.user_id = this.addUserForm.value['selectedUser'];
-    console.log('this.user_id', this.user_id);
-    this.todoService.addUserToTodo(this.todo_id, this.user_id).subscribe(data => {
+    this.subscription$.push(this.todoService.addUserToTodo(this.todo_id, this.user_id).subscribe(data => {
       this.getUserForTodo();
       this.data = data;
       this.loading = false;
@@ -63,7 +71,7 @@ export class AddUserComponent implements OnInit {
     }, error => {
       // this.alertService.error(error);
       this.loading = false;
-    });
+    }));
   }
 
   get u() {
@@ -78,24 +86,22 @@ export class AddUserComponent implements OnInit {
   }
 
   private getUsers() {
-    this.userService.getAll().subscribe(data => {
+    this.subscription$.push(this.userService.getAll().subscribe(data => {
       this.users = data;
     }, error => {
-    });
+    }));
   }
 
   loadUser() {
-    console.log('loadUser()');
     this.getUsers();
   }
 
   private getUserForTodo() {
-    this.todoService.getTodoUsers(this.todo_id).subscribe(data => {
+    this.subscription$.push(this.todoService.getTodoUsers(this.todo_id).subscribe(data => {
       this.todo_users = data;
-      console.log('todousers', this.todo_users);
     }, error => {
       // this.alertService.error(error);
-    });
+    }));
   }
 
 }

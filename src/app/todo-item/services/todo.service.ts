@@ -5,14 +5,16 @@ import {Item} from '../model/item';
 import {User} from '../../auth/model/user';
 import {environment} from '../../../environments/environment';
 import {Description} from '../model/description';
+import {Observable} from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class TodoService {
 
-  urle: string;
+  url: string;
   apiUrl = environment.api_url;
+  SERVICE_TODOS = '/service/todos';
 
   constructor(private http: HttpClient) {
   }
@@ -25,9 +27,8 @@ export class TodoService {
     return this.http.get(`${this.apiUrl}/service/todos/`);
   }
 
-  getTodo(todo_id) {
-    console.log('service todo', todo_id);
-    return this.http.get(`${this.apiUrl}/service/todos/${todo_id}`);
+  getTodo(todo_id): Observable<Todo> {
+    return this.http.get<Todo>(`${this.apiUrl}/service/todos/${todo_id}`);
   }
 
   getTodoItems(todo_id) {
@@ -75,8 +76,8 @@ export class TodoService {
   }
 
   updateItemDescription(todo_id, item_id, description: Description, entity) {
-    this.urle = `${this.apiUrl}/service/todos/${todo_id}/items/${item_id}/descriptions/${description.id}/update/?entity=${entity}`;
-    return this.http.put(this.urle, description);
+    this.url = `${this.apiUrl}/service/todos/${todo_id}/items/${item_id}/descriptions/${description.id}/update/?entity=${entity}`;
+    return this.http.put(this.url, description);
   }
 
   setItemDueDate(todo_id, item_id, dueDate) {
@@ -85,6 +86,10 @@ export class TodoService {
 
   getItemsByUser(user_id) {
     return this.http.get(`${this.apiUrl}/timeline/${user_id}/items`);
+  }
+
+  checkOpenItems(todo_id: number): Observable<boolean> {
+    return this.http.get<boolean>(this.apiUrl + this.SERVICE_TODOS + '/check/items/' + todo_id);
   }
 
 }

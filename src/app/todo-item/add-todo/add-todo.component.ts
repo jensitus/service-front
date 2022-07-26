@@ -1,57 +1,75 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Todo} from '../model/todo';
 import {ActivatedRoute} from '@angular/router';
 import {TodoService} from '../services/todo.service';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
 import {CommonService} from '../../common/services/common.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-add-todo',
   templateUrl: './add-todo.component.html',
   styleUrls: ['./add-todo.component.css']
 })
-export class AddTodoComponent implements OnInit {
+export class AddTodoComponent implements OnInit, OnDestroy {
 
-  todoForm: FormGroup;
+  todoName: string;
   todo: Todo;
   loading = false;
   submitted = false;
+  simple: boolean;
+  titleError = false;
+  placeholder = 'Todo Title';
+  simpleLabel = 'simple';
+  subscription$: Subscription | undefined;
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private todoService: TodoService,
     private alertService: AlertService,
-    private formBuilder: FormBuilder,
     private commonService: CommonService
-  ) { }
-
-  ngOnInit() {
-    this.todoForm = this.formBuilder.group({
-      title: ['', Validators.required]
-    });
+  ) {
   }
 
-  get f() {
-    return this.todoForm.controls;
+  ngOnInit() {
+    this.simple = true;
+  }
+
+  ngOnDestroy(): void {
+    if (this.subscription$) {
+      this.subscription$.unsubscribe();
+    }
   }
 
   onSubmit() {
     this.submitted = true;
-    if (this.todoForm.invalid) {
+    this.loading = true;
+    if (this.todoName === null || this.todoName === undefined || this.todoName === '') {
+      this.titleError = true;
+      this.placeholder = 'Required';
       return;
     }
-    this.loading = true;
-    this.todoService.createTodo(this.todoForm.value).subscribe(data => {
+    this.todo = {
+      simple: this.simple,
+      title: this.todoName
+    };
+    this.subscription$.add(this.todoService.createTodo(this.todo).subscribe(data => {
       console.log('the new todo', data);
       this.commonService.setNewTodoSubject(true);
       this.loading = false;
-      this.todoForm.reset();
     }, error => {
       // this.alertService.error(error);
-    });
+    }));
   }
 
-
-
+  simpleOrNot(event) {
+    if (event.target.checked === true) {
+      this.simple = true;
+      this.simpleLabel = 'simple';
+    } else if (event.target.checked === false) {
+      this.simple = false;
+      this.simpleLabel = 'complex';
+    }
+  }
 }

@@ -4,6 +4,7 @@ import {AlertService} from '../../admin-template/layout/components/alert/service
 import {TodoService} from '../services/todo.service';
 import {CommonService} from '../../common/services/common.service';
 import {Todo} from '../model/todo';
+import {faTrash} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-list-todo',
@@ -18,6 +19,7 @@ export class ListTodoComponent implements OnInit {
   loading = false;
   todo: any;
   data: any;
+  faTrash = faTrash;
 
   constructor(
     private router: Router,

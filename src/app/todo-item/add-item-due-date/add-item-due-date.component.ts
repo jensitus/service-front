@@ -1,16 +1,17 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit} from '@angular/core';
 import {TodoService} from '../services/todo.service';
 import {Item} from '../model/item';
 import {CommonService} from '../../common/services/common.service';
 import {ModalDismissReasons, NgbDateStruct, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {NgbFormatterService} from '../../common/services/ngb-formatter.service';
+import {Subscription} from 'rxjs';
 
 @Component({
   selector: 'app-add-item-due-date',
   templateUrl: './add-item-due-date.component.html',
   styleUrls: ['./add-item-due-date.component.css']
 })
-export class AddItemDueDateComponent implements OnInit {
+export class AddItemDueDateComponent implements OnInit, OnDestroy {
 
   @Input() todo_id: string;
   @Input() item: Item;
@@ -18,6 +19,7 @@ export class AddItemDueDateComponent implements OnInit {
   dueDate: any;
   dueDatePlaceholder: string;
   closeResult: string;
+  subscription$: Subscription[] = [];
 
   constructor(
     private todoService: TodoService,
@@ -38,11 +40,19 @@ export class AddItemDueDateComponent implements OnInit {
     this.setDueDatePlaceholder();
   }
 
+  ngOnDestroy(): void {
+    if (this.subscription$) {
+      this.subscription$.forEach((s) => {
+        s.unsubscribe();
+      });
+    }
+  }
+
   setTheDueDate() {
-    this.todoService.setItemDueDate(this.todo_id, this.item.id, this.ngbFormatterService.format(this.dueDate)).subscribe(result => {
+    this.subscription$.push(this.todoService.setItemDueDate(this.todo_id, this.item.id, this.ngbFormatterService.format(this.dueDate)).subscribe(result => {
       console.log(result);
       this.commonService.setDueDateSubject(true);
-    });
+    }));
   }
 
   open(content) {

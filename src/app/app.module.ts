@@ -16,8 +16,6 @@ import {AuthGuard} from './auth/guards/auth.guard';
 import {NavbarComponent} from './common/navbar/navbar.component';
 import {ResetPasswordComponent} from './auth/reset-password/reset-password.component';
 import {ForgotPasswordComponent} from './auth/forgot-password/forgot-password.component';
-import {ListTodoComponent} from './todo-item/list-todo/list-todo.component';
-// import {ItemsComponent} from './todo-item/items/items.component';
 import {ShowTodoComponent} from './todo-item/show-todo/show-todo.component';
 import {DiaryComponent} from './diary/diary/diary.component';
 import {DiaryListComponent} from './diary/diary-list/diary-list.component';
@@ -32,7 +30,6 @@ import {EditUserComponent} from './auth/edit-user/edit-user.component';
 import {OrderModule} from 'ngx-order-pipe';
 
 import {TodoComponent} from './todo-item/todo/todo.component';
-import {TaskListComponent} from './process/task-list/task-list.component';
 import {ProcessMigrationComponent} from './common/process-migration/process-migration.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import {LayoutModule} from './admin-template/layout/layout.module';
@@ -42,12 +39,17 @@ import {ChangePasswordComponent} from './auth/change-password/change-password.co
 import {PageHeaderModule} from './admin-template/shared/modules';
 import {UploadComponent} from './common/upload/upload.component';
 import {FileUploadModule} from 'ng2-file-upload';
-import { FilelistComponent } from './common/upload/filelist/filelist.component';
-import { TheaterComponent } from './cinephilia/theater/theater.component';
-import { MoviesComponent } from './cinephilia/movies/movies.component';
-import { TheatersComponent } from './cinephilia/theaters/theaters.component';
-import { MovieComponent } from './cinephilia/movie/movie.component';
-import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {FilelistComponent} from './common/upload/filelist/filelist.component';
+import {TheaterComponent} from './cinephilia/theater/theater.component';
+import {MoviesComponent} from './cinephilia/movies/movies.component';
+import {TheatersComponent} from './cinephilia/theaters/theaters.component';
+import {MovieComponent} from './cinephilia/movie/movie.component';
+import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
+import {DashboardModule} from './admin-template/layout/dashboard/dashboard.module';
+import {SimpleTodoComponent} from './process/simple-todo/simple-todo.component';
+import {ComplexTodoComponent} from './process/complex-todo/complex-todo.component';
+import {DescriptionComponent} from './todo-item/description/add/description.component';
+import {AddItemDueDateComponent} from './todo-item/add-item-due-date/add-item-due-date.component';
 
 const app_routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -83,7 +85,6 @@ const app_routes: Routes = [
     NavbarComponent,
     ResetPasswordComponent,
     ForgotPasswordComponent,
-    ListTodoComponent,
     // ItemsComponent,
     ShowTodoComponent,
     DiaryComponent,
@@ -93,7 +94,6 @@ const app_routes: Routes = [
     UserComponent,
     EditUserComponent,
     TodoComponent,
-    TaskListComponent,
     ProcessMigrationComponent,
     ConfirmAccountComponent,
     ChangePasswordComponent,
@@ -103,22 +103,27 @@ const app_routes: Routes = [
     MoviesComponent,
     TheatersComponent,
     MovieComponent,
+    SimpleTodoComponent,
+    ComplexTodoComponent,
+    DescriptionComponent,
+    AddItemDueDateComponent
   ],
-  imports: [
-    BrowserModule,
-    OrderModule,
-    FormsModule,
-    BrowserAnimationsModule,
-    RouterModule.forRoot(app_routes, {enableTracing: true}),
-    HttpClientModule,
-    ReactiveFormsModule,
-    NgbModule,
-    LayoutModule,
-    AlertModule,
-    PageHeaderModule,
-    FileUploadModule,
-    FontAwesomeModule
-  ],
+    imports: [
+        BrowserModule,
+        OrderModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        RouterModule.forRoot(app_routes, {enableTracing: true}),
+        HttpClientModule,
+        ReactiveFormsModule,
+        NgbModule,
+        LayoutModule,
+        AlertModule,
+        PageHeaderModule,
+        FileUploadModule,
+        FontAwesomeModule,
+        DashboardModule
+    ],
   providers: [
     AuthGuard,
     UserService,

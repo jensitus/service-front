@@ -1,11 +1,10 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule} from '@angular/router';
+import {RouterModule, Routes} from '@angular/router';
 import {LayoutComponent} from './layout.component';
-import {HomeComponent} from '../../common/home/home.component';
-import {TaskComponent} from './components/task/task.component';
 import {UserComponent} from '../../auth/user/user.component';
 import {EditUserComponent} from '../../auth/edit-user/edit-user.component';
 import {ChangePasswordComponent} from '../../auth/change-password/change-password.component';
+import {TodoComponent} from '../../todo-item/todo/todo.component';
 
 const routes: Routes = [
   {
@@ -16,7 +15,7 @@ const routes: Routes = [
       // {path: 'home', component: HomeComponent},
       // {path: '', redirectTo: 'home', pathMatch: 'full'}
       {path: 'dashboard', loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule)},
-      {path: 'tasks/:formKey/:taskId', component: TaskComponent},
+      {path: 'todos/:id', component: TodoComponent},
       {path: 'users/:username', component: UserComponent},
       {path: 'users/:username/edit', component: EditUserComponent},
       {path: 'users/:username/changepw', component: ChangePasswordComponent},

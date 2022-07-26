@@ -1,20 +1,37 @@
-<div *ngFor="let t of todos">
-  <div class="p-grid">
-    <div class="p-col-6">
+<div class="card">
+  <div class="card-header">
+    TODOs
+  </div>
+  <div class="card-body">
+    <div *ngFor="let t of todos">
+      <div class="row">
+        <div class="col-6 mt-1 mb-2">
             <span *ngIf="t.done == false">
-              {{t.id}}: <a [routerLink]='["/todos/", t.id]'>{{t.title}}</a>
+              <a [routerLink]='["/todos/", t.id]'>{{t.title}}</a>
             </span>
-      <span *ngIf="t.done == true">
+          <span *ngIf="t.done == true">
               <s>{{t.id}}</s>: <s>{{t.title}}</s>
             </span>
-    </div>
-    <div class="p-col-3">
-      <a (click)="updateTodo(t.id)"><i class="pi pi-check"></i></a>
-    </div>
-    <div class="p-col-3">
+        </div>
+        <div class="col-3">
+          <!-- <a (click)="updateTodo(t.id)"><i class="pi pi-check"></i></a> -->
+        </div>
+        <div class="col-3">
             <span *ngIf="t.done == true">
-              <a (click)="deleteTodo(t.id)"><i class="pi pi-trash"></i></a>
+              <a (click)="deleteTodo(t.id)"><fa-icon [icon]="faTrash"></fa-icon></a>
             </span>
+        </div>
+      </div>
     </div>
+  </div>
+</div>
+
+
+<div class="card mt-3 mb-3">
+  <div class="card-header">
+    <i class="fa fa-fw fa-wrench"></i> new Todo
+  </div>
+  <div class="card-body">
+    <app-add-todo></app-add-todo>
   </div>
 </div>

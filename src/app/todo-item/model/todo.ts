@@ -1,8 +1,9 @@
 import {Item} from './item';
 
 export class Todo {
-  id: number;
+  id?: number;
   title: string;
-  created_by: string;
-  items: Item[];
+  created_by?: string;
+  items?: Item[];
+  simple: boolean;
 }
