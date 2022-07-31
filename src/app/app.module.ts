@@ -50,6 +50,7 @@ import {SimpleTodoComponent} from './process/simple-todo/simple-todo.component';
 import {ComplexTodoComponent} from './process/complex-todo/complex-todo.component';
 import {DescriptionComponent} from './todo-item/description/add/description.component';
 import {AddItemDueDateComponent} from './todo-item/add-item-due-date/add-item-due-date.component';
+import {EditDescriptionComponent} from './todo-item/description/edit/edit-description.component';
 
 const app_routes: Routes = [
   {path: 'home', component: HomeComponent},
@@ -106,7 +107,8 @@ const app_routes: Routes = [
     SimpleTodoComponent,
     ComplexTodoComponent,
     DescriptionComponent,
-    AddItemDueDateComponent
+    AddItemDueDateComponent,
+    EditDescriptionComponent
   ],
     imports: [
         BrowserModule,

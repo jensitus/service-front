@@ -22,7 +22,7 @@ export class AddTodoComponent implements OnInit, OnDestroy {
   titleError = false;
   placeholder = 'Todo Title';
   simpleLabel = 'simple';
-  subscription$: Subscription | undefined;
+  subscription$: Subscription[] = [];
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -38,7 +38,9 @@ export class AddTodoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     if (this.subscription$) {
-      this.subscription$.unsubscribe();
+      this.subscription$.forEach((s) => {
+        s.unsubscribe();
+      });
     }
   }
 
@@ -54,7 +56,7 @@ export class AddTodoComponent implements OnInit, OnDestroy {
       simple: this.simple,
       title: this.todoName
     };
-    this.subscription$.add(this.todoService.createTodo(this.todo).subscribe(data => {
+    this.subscription$.push(this.todoService.createTodo(this.todo).subscribe(data => {
       console.log('the new todo', data);
       this.commonService.setNewTodoSubject(true);
       this.loading = false;
