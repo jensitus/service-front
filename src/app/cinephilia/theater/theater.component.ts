@@ -2,13 +2,11 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TheaterService} from '../services/theater.service';
 import {Theater} from '../model/theater';
-import {TheaterMovies} from '../model/theater-movies';
 import {TheaterSchedules} from '../model/theater-schedules';
 import {MovieService} from '../services/movie.service';
 import {Schedule} from '../model/schedule';
 import {Movie} from '../model/movie';
 import {DatePipe} from '@angular/common';
-import {entryPointKeyFor} from '@angular/compiler-cli/src/ngtsc/routing';
 import {environment} from '../../../environments/environment';
 
 @Component({

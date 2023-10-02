@@ -27,8 +27,6 @@ import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 import {UserComponent} from './auth/user/user.component';
 import {EditUserComponent} from './auth/edit-user/edit-user.component';
 
-import {OrderModule} from 'ngx-order-pipe';
-
 import {TodoComponent} from './todo-item/todo/todo.component';
 import {ProcessMigrationComponent} from './common/process-migration/process-migration.component';
 import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
@@ -114,7 +112,6 @@ const app_routes: Routes = [
   ],
     imports: [
         BrowserModule,
-        OrderModule,
         FormsModule,
         BrowserAnimationsModule,
         RouterModule.forRoot(app_routes, {enableTracing: true}),
