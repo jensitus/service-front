@@ -17,10 +17,7 @@ import {NavbarComponent} from './common/navbar/navbar.component';
 import {ResetPasswordComponent} from './auth/reset-password/reset-password.component';
 import {ForgotPasswordComponent} from './auth/forgot-password/forgot-password.component';
 import {ShowTodoComponent} from './todo-item/show-todo/show-todo.component';
-import {DiaryComponent} from './diary/diary/diary.component';
-import {DiaryListComponent} from './diary/diary-list/diary-list.component';
-import {AddDiaryComponent} from './diary/add-diary/add-diary.component';
-import {EditDiaryComponent} from './diary/edit-diary/edit-diary.component';
+
 
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
@@ -38,10 +35,7 @@ import {PageHeaderModule} from './admin-template/shared/modules';
 import {UploadComponent} from './common/upload/upload.component';
 import {FileUploadModule} from 'ng2-file-upload';
 import {FilelistComponent} from './common/upload/filelist/filelist.component';
-import {TheaterComponent} from './cinephilia/theater/theater.component';
-import {MoviesComponent} from './cinephilia/movies/movies.component';
-import {TheatersComponent} from './cinephilia/theaters/theaters.component';
-import {MovieComponent} from './cinephilia/movie/movie.component';
+
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
 import {DashboardModule} from './admin-template/layout/dashboard/dashboard.module';
 import {SimpleTodoComponent} from './process/simple-todo/simple-todo.component';
@@ -62,10 +56,6 @@ const app_routes: Routes = [
   {path: 'auth/:token/confirm', component: ConfirmAccountComponent},
   {path: 'upload', component: UploadComponent},
   {path: 'filelist', component: FilelistComponent},
-  {path: 'cinephilia/theaters', component: TheatersComponent },
-  {path: 'cinephilia/theaters/:id/movies', component: TheaterComponent },
-  {path: 'cinephilia/movies/:id', component: MovieComponent},
-  {path: 'diary', component: DiaryComponent},
 /*
   {path: 'todos', component: TodoComponent},
   {path: 'todos/:id', component: ShowTodoComponent},
@@ -87,10 +77,6 @@ const app_routes: Routes = [
         ForgotPasswordComponent,
         // ItemsComponent,
         ShowTodoComponent,
-        DiaryComponent,
-        DiaryListComponent,
-        AddDiaryComponent,
-        EditDiaryComponent,
         UserComponent,
         EditUserComponent,
         TodoComponent,
@@ -99,10 +85,6 @@ const app_routes: Routes = [
         ChangePasswordComponent,
         UploadComponent,
         FilelistComponent,
-        TheaterComponent,
-        MoviesComponent,
-        TheatersComponent,
-        MovieComponent,
         SimpleTodoComponent,
         ComplexTodoComponent,
         DescriptionComponent,
