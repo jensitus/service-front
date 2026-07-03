@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {User} from '../../auth/model/user';
 import {UserService} from '../../auth/services/user.service';
 import {first} from 'rxjs/operators';
@@ -7,9 +7,11 @@ import {CommonService} from '../services/common.service';
 import {routerTransition} from '../../router.animations';
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.css']
+    selector: 'app-home',
+    templateUrl: './home.component.html',
+    styleUrls: ['./home.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class HomeComponent implements OnInit {
 

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {Todo} from '../model/todo';
 import {Item} from '../model/item';
 import {User} from '../../auth/model/user';

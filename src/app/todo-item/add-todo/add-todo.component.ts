@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {Todo} from '../model/todo';
 import {ActivatedRoute} from '@angular/router';
@@ -8,9 +8,11 @@ import {CommonService} from '../../common/services/common.service';
 import {Subscription} from 'rxjs';
 
 @Component({
-  selector: 'app-add-todo',
-  templateUrl: './add-todo.component.html',
-  styleUrls: ['./add-todo.component.css']
+    selector: 'app-add-todo',
+    templateUrl: './add-todo.component.html',
+    styleUrls: ['./add-todo.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AddTodoComponent implements OnInit, OnDestroy {
 

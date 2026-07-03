@@ -6,7 +6,7 @@ describe('MigrationService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));
 
   it('should be created', () => {
-    const service: MigrationService = TestBed.get(MigrationService);
+    const service: MigrationService = TestBed.inject(MigrationService);
     expect(service).toBeTruthy();
   });
 });

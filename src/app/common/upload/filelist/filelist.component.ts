@@ -1,11 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {UploadService} from '../../services/upload.service';
 import {Uploaded} from '../model/uploaded';
 
 @Component({
-  selector: 'app-filelist',
-  templateUrl: './filelist.component.html',
-  styleUrls: ['./filelist.component.css']
+    selector: 'app-filelist',
+    templateUrl: './filelist.component.html',
+    styleUrls: ['./filelist.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class FilelistComponent implements OnInit {
 

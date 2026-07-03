@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../services/user.service';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
 
 @Component({
-  selector: 'app-confirm-account',
-  templateUrl: './confirm-account.component.html',
-  styleUrls: ['./confirm-account.component.css']
+    selector: 'app-confirm-account',
+    templateUrl: './confirm-account.component.html',
+    styleUrls: ['./confirm-account.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ConfirmAccountComponent implements OnInit {
 

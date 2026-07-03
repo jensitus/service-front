@@ -1,11 +1,13 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {Subscription} from 'rxjs';
 import {AlertService} from './services/alert.service';
 //
 @Component({
-   selector: 'app-alert',
-   templateUrl: './alert.component.html',
-   styleUrls: ['./alert.component.css']
+    selector: 'app-alert',
+    templateUrl: './alert.component.html',
+    styleUrls: ['./alert.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AlertComponent implements OnInit, OnDestroy {
   private subscription: Subscription;

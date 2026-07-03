@@ -1,13 +1,15 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TodoService} from '../../services/todo.service';
 import {Description} from '../../model/description';
 import {CommonService} from '../../../common/services/common.service';
 
 @Component({
-  selector: 'app-edit-description',
-  templateUrl: './edit-description.component.html',
-  styleUrls: ['./edit-description.component.css']
+    selector: 'app-edit-description',
+    templateUrl: './edit-description.component.html',
+    styleUrls: ['./edit-description.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class EditDescriptionComponent implements OnInit {
 

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import {User} from '../../../auth/model/user';
 import {Router} from '@angular/router';
@@ -7,7 +7,9 @@ import {Router} from '@angular/router';
     selector: 'app-dashboard',
     templateUrl: './dashboard.component.html',
     styleUrls: ['./dashboard.component.scss'],
-    animations: [routerTransition()]
+    animations: [routerTransition()],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DashboardComponent implements OnInit {
     public alerts: Array<any> = [];

@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpRequest, HttpHandler, HttpEvent, HttpInterceptor} from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {catchError} from 'rxjs/operators';
 
@@ -48,7 +48,15 @@ export class ErrorInterceptor implements HttpInterceptor {
           this.alertService.error(err.error.text, true);
         }
       } else if (err.status === 400) {
-        this.alertService.error(err.error.errors[0].defaultMessage);
+        // Spring Boot 3.x (RFC 7807): errors[0].detail
+        // Spring Boot 2.x: errors[0].defaultMessage
+        // Explicit Message responses: err.error.text
+        const msg = err.error?.errors?.[0]?.detail
+          || err.error?.errors?.[0]?.defaultMessage
+          || err.error?.detail
+          || err.error?.text
+          || 'Bad request';
+        this.alertService.error(msg);
       }
 
       // const error = err.text || err.statusText;

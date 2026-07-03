@@ -15,14 +15,18 @@
       </div>
     </div>
     <div class="col-md-4 mt-3">
-      <div *ngIf="user">
-        <div *ngIf="currentUser.email == user.email">
-          <ul class="list-group">
-            <li class="list-group-item"><a [routerLink]="['/users', user.username, 'edit']">change email</a></li>
-            <li class="list-group-item"><a [routerLink]="['/users', user.username, 'changepw']">change pw</a></li>
-          </ul>
+      @if (user) {
+        <div>
+          @if (currentUser.email == user.email) {
+            <div>
+              <ul class="list-group">
+                <li class="list-group-item"><a [routerLink]="['/users', user.username, 'edit']">change email</a></li>
+                <li class="list-group-item"><a [routerLink]="['/users', user.username, 'changepw']">change pw</a></li>
+              </ul>
+            </div>
+          }
         </div>
-      </div>
+      }
     </div>
   </div>
 </div>

@@ -8,7 +8,7 @@ import {RouterModule, Routes} from '@angular/router';
 import {UserService} from './auth/services/user.service';
 import {LoginComponent} from './auth/login/login.component';
 import {RegisterComponent} from './auth/register/register.component';
-import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
+import { HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withXhr } from '@angular/common/http';
 import {AuthenticationService} from './auth/services/authentication.service';
 import {JwtInterceptor} from './auth/helpers/jwt.interceptor';
 import {ErrorInterceptor} from './common/helper/error.interceptor';
@@ -64,7 +64,8 @@ const app_routes: Routes = [
   {path: 'filelist', component: FilelistComponent},
   {path: 'cinephilia/theaters', component: TheatersComponent },
   {path: 'cinephilia/theaters/:id/movies', component: TheaterComponent },
-  {path: 'cinephilia/movies/:id', component: MovieComponent}
+  {path: 'cinephilia/movies/:id', component: MovieComponent},
+  {path: 'diary', component: DiaryComponent},
 /*
   {path: 'todos', component: TodoComponent},
   {path: 'todos/:id', component: ShowTodoComponent},
@@ -76,46 +77,44 @@ const app_routes: Routes = [
   {path: 'migrate/process', component: ProcessMigrationComponent}*/
 ];
 
-@NgModule({
-  declarations: [
-    AppComponent,
-    HomeComponent,
-    LoginComponent,
-    RegisterComponent,
-    NavbarComponent,
-    ResetPasswordComponent,
-    ForgotPasswordComponent,
-    // ItemsComponent,
-    ShowTodoComponent,
-    DiaryComponent,
-    DiaryListComponent,
-    AddDiaryComponent,
-    EditDiaryComponent,
-    UserComponent,
-    EditUserComponent,
-    TodoComponent,
-    ProcessMigrationComponent,
-    ConfirmAccountComponent,
-    ChangePasswordComponent,
-    UploadComponent,
-    FilelistComponent,
-    TheaterComponent,
-    MoviesComponent,
-    TheatersComponent,
-    MovieComponent,
-    SimpleTodoComponent,
-    ComplexTodoComponent,
-    DescriptionComponent,
-    AddItemDueDateComponent,
-    EditDescriptionComponent,
-    LinkifyPipe
-  ],
-    imports: [
-        BrowserModule,
+@NgModule({ declarations: [
+        AppComponent,
+        HomeComponent,
+        LoginComponent,
+        RegisterComponent,
+        NavbarComponent,
+        ResetPasswordComponent,
+        ForgotPasswordComponent,
+        // ItemsComponent,
+        ShowTodoComponent,
+        DiaryComponent,
+        DiaryListComponent,
+        AddDiaryComponent,
+        EditDiaryComponent,
+        UserComponent,
+        EditUserComponent,
+        TodoComponent,
+        ProcessMigrationComponent,
+        ConfirmAccountComponent,
+        ChangePasswordComponent,
+        UploadComponent,
+        FilelistComponent,
+        TheaterComponent,
+        MoviesComponent,
+        TheatersComponent,
+        MovieComponent,
+        SimpleTodoComponent,
+        ComplexTodoComponent,
+        DescriptionComponent,
+        AddItemDueDateComponent,
+        EditDescriptionComponent,
+        LinkifyPipe
+    ],
+    exports: [],
+    bootstrap: [AppComponent], imports: [BrowserModule,
         FormsModule,
         BrowserAnimationsModule,
-        RouterModule.forRoot(app_routes, {enableTracing: true}),
-        HttpClientModule,
+        RouterModule.forRoot(app_routes, { enableTracing: true }),
         ReactiveFormsModule,
         NgbModule,
         LayoutModule,
@@ -123,18 +122,13 @@ const app_routes: Routes = [
         PageHeaderModule,
         FileUploadModule,
         FontAwesomeModule,
-        DashboardModule
-    ],
-  providers: [
-    AuthGuard,
-    UserService,
-    AuthenticationService,
-    {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-    {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
-  ],
-  exports: [
-  ],
-  bootstrap: [AppComponent]
-})
+        DashboardModule], providers: [
+        AuthGuard,
+        UserService,
+        AuthenticationService,
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+        provideHttpClient(withXhr(), withInterceptorsFromDi())
+    ] })
 export class AppModule {
 }

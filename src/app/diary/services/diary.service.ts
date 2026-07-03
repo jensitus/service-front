@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {environment} from '../../../environments/environment';
-import {HttpClient} from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import {Diary} from '../model/diary';
 
 @Injectable({
@@ -20,12 +20,12 @@ export class DiaryService {
     return this.http.get<Diary[]>(`${this.apiUrl}/service/diaries`);
   }
 
-  getDiary(diary_id) {
-    return this.http.get<Diary>(`${this.apiUrl}/service/diaries/${diary_id}`);
+  getDiary() {
+    return this.http.get<Diary>(`${this.apiUrl}/diary`);
   }
 
   updateDiary(diary: Diary) {
-    return this.http.put(`${this.apiUrl}/service/diaries/${diary.id}`, diary);
+    return this.http.put(`${this.apiUrl}/service/diaries/`, diary);
   }
 
 }

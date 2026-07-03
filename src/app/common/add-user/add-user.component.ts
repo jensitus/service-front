@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {TodoService} from '../../todo-item/services/todo.service';
 import {UserService} from '../../auth/services/user.service';
@@ -7,9 +7,11 @@ import {AlertService} from '../../admin-template/layout/components/alert/service
 import {Subscription} from 'rxjs';
 
 @Component({
-  selector: 'app-add-user',
-  templateUrl: './add-user.component.html',
-  styleUrls: ['./add-user.component.css']
+    selector: 'app-add-user',
+    templateUrl: './add-user.component.html',
+    styleUrls: ['./add-user.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AddUserComponent implements OnInit, OnDestroy {
 

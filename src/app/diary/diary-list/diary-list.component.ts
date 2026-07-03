@@ -1,13 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {DiaryService} from '../services/diary.service';
 import {Diary} from '../model/diary';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
 import {CommonService} from '../../common/services/common.service';
 
 @Component({
-  selector: 'app-diary-list',
-  templateUrl: './diary-list.component.html',
-  styleUrls: ['./diary-list.component.css']
+    selector: 'app-diary-list',
+    templateUrl: './diary-list.component.html',
+    styleUrls: ['./diary-list.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class DiaryListComponent implements OnInit {
 

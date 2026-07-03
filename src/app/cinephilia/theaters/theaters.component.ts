@@ -1,12 +1,14 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {TheaterService} from '../services/theater.service';
 import {Theater} from '../model/theater';
 import {environment} from '../../../environments/environment';
 
 @Component({
-  selector: 'app-theaters',
-  templateUrl: './theaters.component.html',
-  styleUrls: ['./theaters.component.css']
+    selector: 'app-theaters',
+    templateUrl: './theaters.component.html',
+    styleUrls: ['./theaters.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TheatersComponent implements OnInit {
 

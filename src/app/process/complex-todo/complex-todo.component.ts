@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {TodoService} from '../../todo-item/services/todo.service';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
@@ -7,9 +7,11 @@ import {faTrash} from '@fortawesome/free-solid-svg-icons';
 import {Subscription} from 'rxjs';
 
 @Component({
-  selector: 'app-complex-todo',
-  templateUrl: './complex-todo.component.html',
-  styleUrls: ['./complex-todo.component.css']
+    selector: 'app-complex-todo',
+    templateUrl: './complex-todo.component.html',
+    styleUrls: ['./complex-todo.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ComplexTodoComponent implements OnInit, OnDestroy {
 

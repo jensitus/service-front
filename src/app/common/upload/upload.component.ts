@@ -1,4 +1,4 @@
-import {Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import {Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy} from '@angular/core';
 import {FileUploader} from 'ng2-file-upload';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {UploadService} from '../services/upload.service';
@@ -17,9 +17,11 @@ class ImageSnippet {
 const URL = 'http://localhost:8080/service/app/files';
 
 @Component({
-  selector: 'app-upload',
-  templateUrl: './upload.component.html',
-  styleUrls: ['./upload.component.css']
+    selector: 'app-upload',
+    templateUrl: './upload.component.html',
+    styleUrls: ['./upload.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class UploadComponent implements OnInit {
 

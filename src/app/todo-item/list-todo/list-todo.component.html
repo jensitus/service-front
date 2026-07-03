@@ -3,26 +3,34 @@
     TODOs
   </div>
   <div class="card-body">
-    <div *ngFor="let t of todos">
-      <div class="row">
-        <div class="col-6 mt-1 mb-2">
-            <span *ngIf="t.done == false">
-              <a [routerLink]='["/todos/", t.id]'>{{t.title}}</a>
-            </span>
-          <span *ngIf="t.done == true">
-              <s>{{t.id}}</s>: <s>{{t.title}}</s>
-            </span>
-        </div>
-        <div class="col-3">
-          <!-- <a (click)="updateTodo(t.id)"><i class="pi pi-check"></i></a> -->
-        </div>
-        <div class="col-3">
-            <span *ngIf="t.done == true">
-              <a (click)="deleteTodo(t.id)"><fa-icon [icon]="faTrash"></fa-icon></a>
-            </span>
+    @for (t of todos; track t) {
+      <div>
+        <div class="row">
+          <div class="col-6 mt-1 mb-2">
+            @if (t.done == false) {
+              <span>
+                <a [routerLink]='["/todos/", t.id]'>{{t.title}}</a>
+              </span>
+            }
+            @if (t.done == true) {
+              <span>
+                <s>{{t.id}}</s>: <s>{{t.title}}</s>
+              </span>
+            }
+          </div>
+          <div class="col-3">
+            <!-- <a (click)="updateTodo(t.id)"><i class="pi pi-check"></i></a> -->
+          </div>
+          <div class="col-3">
+            @if (t.done == true) {
+              <span>
+                <a (click)="deleteTodo(t.id)"><fa-icon [icon]="faTrash"></fa-icon></a>
+              </span>
+            }
+          </div>
         </div>
       </div>
-    </div>
+    }
   </div>
 </div>
 

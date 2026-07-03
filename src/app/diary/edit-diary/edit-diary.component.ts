@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {DiaryService} from '../services/diary.service';
 import {Diary} from '../model/diary';
@@ -7,9 +7,11 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 import {first} from 'rxjs/operators';
 
 @Component({
-  selector: 'app-edit-diary',
-  templateUrl: './edit-diary.component.html',
-  styleUrls: ['./edit-diary.component.css']
+    selector: 'app-edit-diary',
+    templateUrl: './edit-diary.component.html',
+    styleUrls: ['./edit-diary.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class EditDiaryComponent implements OnInit {
 
@@ -37,11 +39,10 @@ export class EditDiaryComponent implements OnInit {
       title: ['', Validators.required],
       body: ['', Validators.required]
     });
-    this.diaryService.getDiary(this.diary_id).subscribe(data => {
+    this.diaryService.getDiary().subscribe(data => {
       this.val = {
-        id: data.id,
         title: data.title,
-        body: data.body
+        body: data.text
       };
       this.diaryForm.setValue(this.val);
     }, error => {

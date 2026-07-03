@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TheaterService} from '../services/theater.service';
 import {Theater} from '../model/theater';
@@ -10,10 +10,12 @@ import {DatePipe} from '@angular/common';
 import {environment} from '../../../environments/environment';
 
 @Component({
-  selector: 'app-theater',
-  templateUrl: './theater.component.html',
-  styleUrls: ['./theater.component.css'],
-  providers: [DatePipe]
+    selector: 'app-theater',
+    templateUrl: './theater.component.html',
+    styleUrls: ['./theater.component.css'],
+    providers: [DatePipe],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TheaterComponent implements OnInit {
 

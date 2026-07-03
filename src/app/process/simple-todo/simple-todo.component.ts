@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {TodoService} from '../../todo-item/services/todo.service';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
 import {CommonService} from '../../common/services/common.service';
@@ -6,9 +6,11 @@ import {faTrash} from '@fortawesome/free-solid-svg-icons';
 import {Subscription} from 'rxjs';
 
 @Component({
-  selector: 'app-simple-todo',
-  templateUrl: './simple-todo.component.html',
-  styleUrls: ['./simple-todo.component.css']
+    selector: 'app-simple-todo',
+    templateUrl: './simple-todo.component.html',
+    styleUrls: ['./simple-todo.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class SimpleTodoComponent implements OnInit, OnDestroy {
 

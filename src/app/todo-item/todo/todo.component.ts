@@ -1,4 +1,4 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
+import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute, Router} from '@angular/router';
 import {TodoService} from '../services/todo.service';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
@@ -10,9 +10,11 @@ import {Todo} from '../model/todo';
 import {Subscription} from 'rxjs';
 
 @Component({
-  selector: 'app-todo',
-  templateUrl: './todo.component.html',
-  styleUrls: ['./todo.component.css']
+    selector: 'app-todo',
+    templateUrl: './todo.component.html',
+    styleUrls: ['./todo.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class TodoComponent implements OnInit, OnDestroy {
 

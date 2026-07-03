@@ -13,24 +13,30 @@
       </div>
     </div>
     <div class="col-xl-6">
-      <div *ngFor="let firstLevel of movieForTheaterWithSchedules | keyvalue">
-        <div class="card">
-          <div class="card-header">
-            <b>{{firstLevel.value[0]}}</b>
-          </div>
-          <div *ngFor="let m of firstLevel.value[1] | keyvalue">
-            <div *ngFor="let s of m.value">
-              <a [routerLink]="['/cinephilia/movies/', s.movie_id]">
-                <div class="singleMovie">
-                  <b>{{m.key}}</b><br>
-                  <small>{{s.time.toString() | slice : 11:16}}</small>
-                </div>
-              </a>
+      @for (firstLevel of movieForTheaterWithSchedules | keyvalue; track firstLevel) {
+        <div>
+          <div class="card">
+            <div class="card-header">
+              <b>{{firstLevel.value[0]}}</b>
             </div>
+            @for (m of firstLevel.value[1] | keyvalue; track m) {
+              <div>
+                @for (s of m.value; track s) {
+                  <div>
+                    <a [routerLink]="['/cinephilia/movies/', s.movie_id]">
+                      <div class="singleMovie">
+                        <b>{{m.key}}</b><br>
+                        <small>{{s.time.toString() | slice : 11:16}}</small>
+                      </div>
+                    </a>
+                  </div>
+                }
+              </div>
+            }
+            <!--<p><small>{{schedule.time.toString() | slice : 11:16}}</small></p>-->
           </div>
-          <!--<p><small>{{schedule.time.toString() | slice : 11:16}}</small></p>-->
         </div>
-      </div>
+      }
     </div>
   </div>
 </div>

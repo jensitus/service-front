@@ -22,9 +22,13 @@
     <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
   </div>
 </ng-template>
-<div *ngIf="dueDate != 'yyyy-mm-dd'">
-  <small><a class="text-primary" (click)="open(content)">due date:</a></small><small class="text-secondary"> <b> {{dueDate}}</b></small>
-</div>
-<span *ngIf="dueDate == 'yyyy-mm-dd'">
-  <small><a class="text-primary" (click)="open(content)">due date</a></small>
-</span>
+@if (dueDate != 'yyyy-mm-dd') {
+  <div>
+    <small><a class="text-primary" (click)="open(content)">due date:</a></small><small class="text-secondary"> <b> {{dueDate}}</b></small>
+  </div>
+}
+@if (dueDate == 'yyyy-mm-dd') {
+  <span>
+    <small><a class="text-primary" (click)="open(content)">due date</a></small>
+  </span>
+}

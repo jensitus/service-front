@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {TodoService} from '../services/todo.service';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
@@ -10,9 +10,11 @@ import {CommonService} from '../../common/services/common.service';
 import {Description} from '../model/description';
 
 @Component({
-  selector: 'app-show-todo',
-  templateUrl: './show-todo.component.html',
-  styleUrls: ['./show-todo.component.css']
+    selector: 'app-show-todo',
+    templateUrl: './show-todo.component.html',
+    styleUrls: ['./show-todo.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ShowTodoComponent implements OnInit {
 

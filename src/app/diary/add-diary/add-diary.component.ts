@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
@@ -7,9 +7,11 @@ import {DiaryService} from '../services/diary.service';
 import {Diary} from '../model/diary';
 
 @Component({
-  selector: 'app-add-diary',
-  templateUrl: './add-diary.component.html',
-  styleUrls: ['./add-diary.component.css']
+    selector: 'app-add-diary',
+    templateUrl: './add-diary.component.html',
+    styleUrls: ['./add-diary.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AddDiaryComponent implements OnInit {
 

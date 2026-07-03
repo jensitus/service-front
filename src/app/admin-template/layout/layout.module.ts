@@ -10,7 +10,7 @@ import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AddUserComponent} from '../../common/add-user/add-user.component';
 import {AlertModule} from './components/alert/alert.module';
 import {AuthGuard} from '../../auth/guards/auth.guard';
-import {HTTP_INTERCEPTORS} from '@angular/common/http';
+import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import {JwtInterceptor} from '../../auth/helpers/jwt.interceptor';
 import {ErrorInterceptor} from '../../common/helper/error.interceptor';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';

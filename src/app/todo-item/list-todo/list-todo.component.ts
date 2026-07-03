@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {Router} from '@angular/router';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
 import {TodoService} from '../services/todo.service';
@@ -7,9 +7,11 @@ import {Todo} from '../model/todo';
 import {faTrash} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-list-todo',
-  templateUrl: './list-todo.component.html',
-  styleUrls: ['./list-todo.component.css']
+    selector: 'app-list-todo',
+    templateUrl: './list-todo.component.html',
+    styleUrls: ['./list-todo.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class ListTodoComponent implements OnInit {
 

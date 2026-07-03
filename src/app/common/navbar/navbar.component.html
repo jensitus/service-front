@@ -1,21 +1,29 @@
 <div class="nav navbar-dark bg-info">
   <div class="container">
-    <span class="brand" *ngIf="!titlePrefix">
-      <a [routerLink]="['/']"> service - b . org </a>
-    </span>
-    <span class="brand" *ngIf="titlePrefix">
-      <a [routerLink]="['/']"> {{titlePrefix}} &#64; service - b . org </a>
-    </span>
-    <span *ngIf="currentUser != null" class="nav-user-man">
-      <a [routerLink]="['/users', currentUser.username]" [innerHTML]="currentUser.username" class="navbar-link"></a>
-       |
-      <a [routerLink]="['/login']"> logout</a>
-    </span>
-    <span *ngIf="currentUser == null" class="nav-user-man">
-      <a [routerLink]="['/login']" class="navbar-link">Login </a>
-      |
-      <a [routerLink]="['/register']"> Register</a>
-    </span>
+    @if (!titlePrefix) {
+      <span class="brand">
+        <a [routerLink]="['/']"> service - b . org </a>
+      </span>
+    }
+    @if (titlePrefix) {
+      <span class="brand">
+        <a [routerLink]="['/']"> {{titlePrefix}} &#64; service - b . org </a>
+      </span>
+    }
+    @if (currentUser != null) {
+      <span class="nav-user-man">
+        <a [routerLink]="['/users', currentUser.username]" [innerHTML]="currentUser.username" class="navbar-link"></a>
+        |
+        <a [routerLink]="['/login']"> logout</a>
+      </span>
+    }
+    @if (currentUser == null) {
+      <span class="nav-user-man">
+        <a [routerLink]="['/login']" class="navbar-link">Login </a>
+        |
+        <a [routerLink]="['/register']"> Register</a>
+      </span>
+    }
   </div>
 </div>
 <div class="mt-4"></div>

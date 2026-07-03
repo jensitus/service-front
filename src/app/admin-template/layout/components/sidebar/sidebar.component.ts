@@ -1,13 +1,15 @@
-import {Component, Output, EventEmitter, OnInit} from '@angular/core';
+import {Component, Output, EventEmitter, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {Router, NavigationEnd} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {User} from '../../../../auth/model/user';
 import {faCoffee, faUser, faBars, faPowerOff, faTachometerAlt} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  selector: 'app-sidebar',
-  templateUrl: './sidebar.component.html',
-  styleUrls: ['./sidebar.component.scss']
+    selector: 'app-sidebar',
+    templateUrl: './sidebar.component.html',
+    styleUrls: ['./sidebar.component.scss'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class SidebarComponent implements OnInit {
   isActive: boolean;

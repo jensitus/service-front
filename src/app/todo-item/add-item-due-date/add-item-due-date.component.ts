@@ -1,4 +1,4 @@
-import {Component, Input, OnDestroy, OnInit} from '@angular/core';
+import {Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {TodoService} from '../services/todo.service';
 import {Item} from '../model/item';
 import {CommonService} from '../../common/services/common.service';
@@ -7,9 +7,11 @@ import {NgbFormatterService} from '../../common/services/ngb-formatter.service';
 import {Subscription} from 'rxjs';
 
 @Component({
-  selector: 'app-add-item-due-date',
-  templateUrl: './add-item-due-date.component.html',
-  styleUrls: ['./add-item-due-date.component.css']
+    selector: 'app-add-item-due-date',
+    templateUrl: './add-item-due-date.component.html',
+    styleUrls: ['./add-item-due-date.component.css'],
+    changeDetection: ChangeDetectionStrategy.Eager,
+    standalone: false
 })
 export class AddItemDueDateComponent implements OnInit, OnDestroy {
 
