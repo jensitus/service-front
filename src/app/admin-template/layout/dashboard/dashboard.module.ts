@@ -9,7 +9,7 @@ import {
     NotificationComponent,
     ChatComponent
 } from './components';
-import { StatModule } from '../../shared';
+
 import {AddTodoComponent} from '../../../todo-item/add-todo/add-todo.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
@@ -18,22 +18,21 @@ import {AlertModule} from '../components/alert/alert.module';
 
 @NgModule({
     imports: [
-        CommonModule,
-        NgbCarouselModule,
-        NgbAlertModule,
-        DashboardRoutingModule,
-        StatModule,
-        ReactiveFormsModule,
-        FontAwesomeModule,
-        FormsModule,
-        AlertModule,
-        DashboardComponent,
-        TimelineComponent,
-        NotificationComponent,
-        ChatComponent,
-        ListTodoComponent,
-        AddTodoComponent
-    ],
+    CommonModule,
+    NgbCarouselModule,
+    NgbAlertModule,
+    DashboardRoutingModule,
+    ReactiveFormsModule,
+    FontAwesomeModule,
+    FormsModule,
+    AlertModule,
+    DashboardComponent,
+    TimelineComponent,
+    NotificationComponent,
+    ChatComponent,
+    ListTodoComponent,
+    AddTodoComponent
+],
     exports: [
         AddTodoComponent
     ]

@@ -4,10 +4,10 @@ import { BaseChartDirective, provideCharts, withDefaultRegisterables } from 'ng2
 
 import { ChartsRoutingModule } from './charts-routing.module';
 import { ChartsComponent } from './charts.component';
-import { PageHeaderModule } from '../../shared';
+
 
 @NgModule({
-    imports: [CommonModule, BaseChartDirective, ChartsRoutingModule, PageHeaderModule, ChartsComponent],
+    imports: [CommonModule, BaseChartDirective, ChartsRoutingModule, ChartsComponent],
     providers: [provideCharts(withDefaultRegisterables())]
 })
 export class ChartsModule {}
