@@ -9,6 +9,7 @@ import { TradeJournalComponent } from './trade-journal/trade-journal.component';
 import { CryptoAlertsComponent } from './alerts/crypto-alerts.component';
 import { CoinDetailComponent } from './coin-detail/coin-detail.component';
 import { BitpandaImportComponent } from './bitpanda-import/bitpanda-import.component';
+import {FaIconComponent} from '@fortawesome/angular-fontawesome';
 
 @NgModule({
   declarations: [
@@ -23,7 +24,8 @@ import { BitpandaImportComponent } from './bitpanda-import/bitpanda-import.compo
     FormsModule,
     RouterModule,
     BaseChartDirective,
-    CryptoRoutingModule
+    CryptoRoutingModule,
+    FaIconComponent
   ],
   providers: [provideCharts(withDefaultRegisterables())]
 })

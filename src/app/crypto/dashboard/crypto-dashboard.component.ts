@@ -4,6 +4,7 @@ import { switchMap } from 'rxjs/operators';
 import { CryptoService } from '../services/crypto.service';
 import { CurrencyPreferenceService, Currency } from '../services/currency-preference.service';
 import { LivePrice } from '../models/live-price';
+import {faSyncAlt} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-crypto-dashboard',
@@ -108,4 +109,6 @@ export class CryptoDashboardComponent implements OnInit, OnDestroy {
     if (value >= 1_000_000_000)     return `${sym}${(value / 1_000_000_000).toFixed(2)}B`;
     return `${sym}${value.toLocaleString()}`;
   }
+
+  protected readonly faSyncAlt = faSyncAlt;
 }

@@ -4,6 +4,7 @@ import { CryptoService } from '../services/crypto.service';
 import { CurrencyPreferenceService, Currency } from '../services/currency-preference.service';
 import { Trade } from '../models/trade';
 import { PortfolioSummary } from '../models/portfolio';
+import {faPlus, faTrash} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-trade-journal',
@@ -142,4 +143,7 @@ export class TradeJournalComponent implements OnInit, OnDestroy {
   totalCost(trade: Trade): number {
     return trade.totalValue + (trade.fee || 0);
   }
+
+  protected readonly faPlus = faPlus;
+  protected readonly faTrash = faTrash;
 }

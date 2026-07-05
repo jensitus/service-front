@@ -14,7 +14,7 @@
           (click)="currencyPref.set('USD')">$ USD</button>
       </div>
       <button class="btn btn-primary btn-sm" (click)="showForm = !showForm">
-        <i class="fa" [class.fa-plus]="!showForm" [class.fa-times]="showForm"></i>
+        <fa-icon [icon]="faPlus" *ngIf="!showForm"></fa-icon>
         {{ showForm ? 'Cancel' : 'Log Trade' }}
       </button>
     </div>
@@ -188,7 +188,7 @@
           <td><small class="text-muted">{{ t.note }}</small></td>
           <td>
             <button class="btn btn-outline-danger btn-sm" (click)="deleteTrade(t.id)">
-              <i class="fa fa-trash"></i>
+              <fa-icon [icon]="faTrash" *ngIf="t.source === 'BITPANDA'"></fa-icon>
             </button>
           </td>
         </tr>
