@@ -1,17 +1,19 @@
 import {Component, EventEmitter, OnInit, Output, ChangeDetectionStrategy} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Router} from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import {AuthenticationService} from '../services/authentication.service';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
 import {first} from 'rxjs/operators';
 import {CommonService} from '../../common/services/common.service';
+import { NavbarComponent } from '../../common/navbar/navbar.component';
+import { AlertComponent } from '../../admin-template/layout/components/alert/alert.component';
 
 @Component({
     selector: 'app-login',
     templateUrl: './login.component.html',
     styleUrls: ['./login.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [NavbarComponent, AlertComponent, ReactiveFormsModule, RouterLink]
 })
 export class LoginComponent implements OnInit {
 

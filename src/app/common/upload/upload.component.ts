@@ -2,6 +2,9 @@ import {Component, ElementRef, OnInit, ViewChild, ChangeDetectionStrategy} from 
 import {FileUploader} from 'ng2-file-upload';
 import {FormBuilder, FormGroup} from '@angular/forms';
 import {UploadService} from '../services/upload.service';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { NgStyle } from '@angular/common';
+import { NgbProgressbar } from '@ng-bootstrap/ng-bootstrap/progressbar';
 
 class ImageSnippet {
   pending = false;
@@ -21,7 +24,7 @@ const URL = 'http://localhost:8080/service/app/files';
     templateUrl: './upload.component.html',
     styleUrls: ['./upload.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [NavbarComponent, NgStyle, NgbProgressbar]
 })
 export class UploadComponent implements OnInit {
 

@@ -1,5 +1,5 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
-import { Router, NavigationEnd } from '@angular/router';
+import { Router, NavigationEnd, RouterLink } from '@angular/router';
 import {User} from '../../../../auth/model/user';
 
 @Component({
@@ -7,7 +7,7 @@ import {User} from '../../../../auth/model/user';
     templateUrl: './header.component.html',
     styleUrls: ['./header.component.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [RouterLink]
 })
 export class HeaderComponent implements OnInit {
     public pushRightClass: string;

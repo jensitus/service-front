@@ -1,15 +1,16 @@
 import {Component, Input, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {TodoService} from '../../services/todo.service';
 import {Description} from '../../model/description';
 import {CommonService} from '../../../common/services/common.service';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'app-edit-description',
     templateUrl: './edit-description.component.html',
     styleUrls: ['./edit-description.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [ReactiveFormsModule, NgClass]
 })
 export class EditDescriptionComponent implements OnInit {
 

@@ -3,13 +3,14 @@ import {FormGroup} from '@angular/forms';
 import {User} from '../../auth/model/user';
 import {UserService} from '../../auth/services/user.service';
 import {CommonService} from '../services/common.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
     selector: 'app-navbar',
     templateUrl: './navbar.component.html',
     styleUrls: ['./navbar.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [RouterLink]
 })
 export class NavbarComponent implements OnInit {
 

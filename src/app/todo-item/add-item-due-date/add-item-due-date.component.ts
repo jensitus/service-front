@@ -5,13 +5,15 @@ import {CommonService} from '../../common/services/common.service';
 import {ModalDismissReasons, NgbDateStruct, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {NgbFormatterService} from '../../common/services/ngb-formatter.service';
 import {Subscription} from 'rxjs';
+import { ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { NgbInputDatepicker } from '@ng-bootstrap/ng-bootstrap/datepicker';
 
 @Component({
     selector: 'app-add-item-due-date',
     templateUrl: './add-item-due-date.component.html',
     styleUrls: ['./add-item-due-date.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [ReactiveFormsModule, FormsModule, NgbInputDatepicker]
 })
 export class AddItemDueDateComponent implements OnInit, OnDestroy {
 

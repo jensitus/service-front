@@ -13,8 +13,7 @@ import {Description} from '../model/description';
     selector: 'app-show-todo',
     templateUrl: './show-todo.component.html',
     styleUrls: ['./show-todo.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.Eager
 })
 export class ShowTodoComponent implements OnInit {
 

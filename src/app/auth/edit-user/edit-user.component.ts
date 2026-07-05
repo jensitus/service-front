@@ -2,15 +2,17 @@ import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../services/user.service';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {environment} from '../../../environments/environment';
+import { AlertComponent } from '../../admin-template/layout/components/alert/alert.component';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'app-edit-user',
     templateUrl: './edit-user.component.html',
     styleUrls: ['./edit-user.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [AlertComponent, ReactiveFormsModule, NgClass]
 })
 export class EditUserComponent implements OnInit {
 

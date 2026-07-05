@@ -1,18 +1,20 @@
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {ActivatedRoute, Router} from '@angular/router';
 import {UserService} from '../services/user.service';
 import {User} from '../model/user';
 import {ChangePwDto} from '../model/change-pw-dto';
 import {Location} from '@angular/common';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
+import { AlertComponent } from '../../admin-template/layout/components/alert/alert.component';
+import { PageHeaderComponent } from '../../admin-template/shared/modules/page-header/page-header.component';
 
 @Component({
     selector: 'app-change-password',
     templateUrl: './change-password.component.html',
     styleUrls: ['./change-password.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [AlertComponent, PageHeaderComponent, ReactiveFormsModule]
 })
 export class ChangePasswordComponent implements OnInit {
 

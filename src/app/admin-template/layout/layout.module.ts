@@ -24,13 +24,11 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
         ReactiveFormsModule,
         FormsModule,
         AlertModule,
-        FontAwesomeModule
-    ],
-    declarations: [
+        FontAwesomeModule,
         LayoutComponent,
         SidebarComponent,
         HeaderComponent,
-        AddUserComponent,
+        AddUserComponent
     ],
     exports: [
         HeaderComponent,
@@ -38,8 +36,8 @@ import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
     ],
     providers: [
         AuthGuard,
-        {provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
-        {provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true}
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },
+        { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
     ]
 })
 export class LayoutModule {}

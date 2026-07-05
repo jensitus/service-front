@@ -1,17 +1,20 @@
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
-import {Router} from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
+import { Router, RouterLink } from '@angular/router';
 import {UserService} from '../services/user.service';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
 import {first} from 'rxjs/operators';
 import {AuthenticationService} from '../services/authentication.service';
+import { NavbarComponent } from '../../common/navbar/navbar.component';
+import { AlertComponent } from '../../admin-template/layout/components/alert/alert.component';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'app-register',
     templateUrl: './register.component.html',
     styleUrls: ['./register.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [NavbarComponent, AlertComponent, ReactiveFormsModule, NgClass, RouterLink]
 })
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;

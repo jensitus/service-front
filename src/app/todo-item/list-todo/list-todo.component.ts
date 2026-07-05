@@ -1,17 +1,19 @@
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {Router} from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
 import {TodoService} from '../services/todo.service';
 import {CommonService} from '../../common/services/common.service';
 import {Todo} from '../model/todo';
 import {faTrash} from '@fortawesome/free-solid-svg-icons';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+import { AddTodoComponent } from '../add-todo/add-todo.component';
 
 @Component({
     selector: 'app-list-todo',
     templateUrl: './list-todo.component.html',
     styleUrls: ['./list-todo.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [RouterLink, FaIconComponent, AddTodoComponent]
 })
 export class ListTodoComponent implements OnInit {
 

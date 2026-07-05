@@ -2,13 +2,15 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {UserService} from '../services/user.service';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
+import { NavbarComponent } from '../../common/navbar/navbar.component';
+import { AlertComponent } from '../../admin-template/layout/components/alert/alert.component';
 
 @Component({
     selector: 'app-confirm-account',
     templateUrl: './confirm-account.component.html',
     styleUrls: ['./confirm-account.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [NavbarComponent, AlertComponent]
 })
 export class ConfirmAccountComponent implements OnInit {
 

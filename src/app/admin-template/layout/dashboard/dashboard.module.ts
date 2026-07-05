@@ -26,17 +26,15 @@ import {AlertModule} from '../components/alert/alert.module';
         ReactiveFormsModule,
         FontAwesomeModule,
         FormsModule,
-        AlertModule
-    ],
-    exports: [
-        AddTodoComponent
-    ],
-    declarations: [
+        AlertModule,
         DashboardComponent,
         TimelineComponent,
         NotificationComponent,
         ChatComponent,
         ListTodoComponent,
+        AddTodoComponent
+    ],
+    exports: [
         AddTodoComponent
     ]
 })

@@ -4,8 +4,7 @@ import { Component, OnInit, Input, Output, EventEmitter, ChangeDetectionStrategy
     selector: 'app-stat',
     templateUrl: './stat.component.html',
     styleUrls: ['./stat.component.scss'],
-    changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.Eager
 })
 export class StatComponent implements OnInit {
     @Input() bgClass: string;

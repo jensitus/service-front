@@ -8,8 +8,8 @@ describe('ConfirmAccountComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ConfirmAccountComponent ]
-    })
+    imports: [ConfirmAccountComponent]
+})
     .compileComponents();
   }));
 

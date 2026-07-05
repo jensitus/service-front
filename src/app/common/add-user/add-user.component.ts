@@ -1,5 +1,5 @@
 import {Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {FormBuilder, FormGroup} from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import {TodoService} from '../../todo-item/services/todo.service';
 import {UserService} from '../../auth/services/user.service';
 import {User} from '../../auth/model/user';
@@ -11,7 +11,7 @@ import {Subscription} from 'rxjs';
     templateUrl: './add-user.component.html',
     styleUrls: ['./add-user.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [ReactiveFormsModule]
 })
 export class AddUserComponent implements OnInit, OnDestroy {
 

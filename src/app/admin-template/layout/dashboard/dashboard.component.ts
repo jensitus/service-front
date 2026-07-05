@@ -2,6 +2,9 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
 import {User} from '../../../auth/model/user';
 import {Router} from '@angular/router';
+import { AlertComponent } from '../components/alert/alert.component';
+import { ListTodoComponent } from '../../../todo-item/list-todo/list-todo.component';
+import { TimelineComponent } from './components/timeline/timeline.component';
 
 @Component({
     selector: 'app-dashboard',
@@ -9,7 +12,7 @@ import {Router} from '@angular/router';
     styleUrls: ['./dashboard.component.scss'],
     animations: [routerTransition()],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [AlertComponent, ListTodoComponent, TimelineComponent]
 })
 export class DashboardComponent implements OnInit {
     public alerts: Array<any> = [];

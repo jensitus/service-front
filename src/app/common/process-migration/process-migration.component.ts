@@ -1,14 +1,16 @@
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {MigrationService} from '../services/migration.service';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'app-process-migration',
     templateUrl: './process-migration.component.html',
     styleUrls: ['./process-migration.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [NavbarComponent, ReactiveFormsModule, NgClass]
 })
 export class ProcessMigrationComponent implements OnInit {
 

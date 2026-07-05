@@ -2,16 +2,18 @@ import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
 import {User} from '../../auth/model/user';
 import {UserService} from '../../auth/services/user.service';
 import {first} from 'rxjs/operators';
-import {Router} from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import {CommonService} from '../services/common.service';
 import {routerTransition} from '../../router.animations';
+import { NavbarComponent } from '../navbar/navbar.component';
+import { NgbCarousel, NgbSlide } from '@ng-bootstrap/ng-bootstrap/carousel';
 
 @Component({
     selector: 'app-home',
     templateUrl: './home.component.html',
     styleUrls: ['./home.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [NavbarComponent, RouterLink, NgbCarousel, NgbSlide]
 })
 export class HomeComponent implements OnInit {
 

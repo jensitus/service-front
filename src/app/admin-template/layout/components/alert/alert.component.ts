@@ -6,8 +6,7 @@ import {AlertService} from './services/alert.service';
     selector: 'app-alert',
     templateUrl: './alert.component.html',
     styleUrls: ['./alert.component.css'],
-    changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    changeDetection: ChangeDetectionStrategy.Eager
 })
 export class AlertComponent implements OnInit, OnDestroy {
   private subscription: Subscription;

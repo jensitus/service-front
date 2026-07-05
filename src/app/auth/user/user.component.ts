@@ -1,15 +1,16 @@
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import {UserService} from '../services/user.service';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
 import {User} from '../model/user';
+import { PageHeaderComponent } from '../../admin-template/shared/modules/page-header/page-header.component';
 
 @Component({
     selector: 'app-user',
     templateUrl: './user.component.html',
     styleUrls: ['./user.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [PageHeaderComponent, RouterLink]
 })
 export class UserComponent implements OnInit {
 

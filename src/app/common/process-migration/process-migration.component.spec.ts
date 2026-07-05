@@ -8,8 +8,8 @@ describe('ProcessMigrationComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ProcessMigrationComponent ]
-    })
+    imports: [ProcessMigrationComponent]
+})
     .compileComponents();
   }));
 

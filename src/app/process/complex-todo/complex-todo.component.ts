@@ -5,13 +5,16 @@ import {AlertService} from '../../admin-template/layout/components/alert/service
 import {CommonService} from '../../common/services/common.service';
 import {faTrash} from '@fortawesome/free-solid-svg-icons';
 import {Subscription} from 'rxjs';
+import { DescriptionComponent } from '../../todo-item/description/add/description.component';
+import { AddItemDueDateComponent } from '../../todo-item/add-item-due-date/add-item-due-date.component';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
     selector: 'app-complex-todo',
     templateUrl: './complex-todo.component.html',
     styleUrls: ['./complex-todo.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [DescriptionComponent, AddItemDueDateComponent, FaIconComponent]
 })
 export class ComplexTodoComponent implements OnInit, OnDestroy {
 

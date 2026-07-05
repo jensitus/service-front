@@ -67,9 +67,19 @@ const app_routes: Routes = [
   {path: 'migrate/process', component: ProcessMigrationComponent}*/
 ];
 
-@NgModule({ declarations: [
-        AppComponent,
-        HomeComponent,
+@NgModule({ declarations: [AppComponent], exports: [],
+    bootstrap: [AppComponent], imports: [BrowserModule,
+        FormsModule,
+        BrowserAnimationsModule,
+        RouterModule.forRoot(app_routes, { enableTracing: true }),
+        ReactiveFormsModule,
+        NgbModule,
+        LayoutModule,
+        AlertModule,
+        PageHeaderModule,
+        FileUploadModule,
+        FontAwesomeModule,
+        DashboardModule, HomeComponent,
         LoginComponent,
         RegisterComponent,
         NavbarComponent,
@@ -90,21 +100,7 @@ const app_routes: Routes = [
         DescriptionComponent,
         AddItemDueDateComponent,
         EditDescriptionComponent,
-        LinkifyPipe
-    ],
-    exports: [],
-    bootstrap: [AppComponent], imports: [BrowserModule,
-        FormsModule,
-        BrowserAnimationsModule,
-        RouterModule.forRoot(app_routes, { enableTracing: true }),
-        ReactiveFormsModule,
-        NgbModule,
-        LayoutModule,
-        AlertModule,
-        PageHeaderModule,
-        FileUploadModule,
-        FontAwesomeModule,
-        DashboardModule], providers: [
+        LinkifyPipe], providers: [
         AuthGuard,
         UserService,
         AuthenticationService,

@@ -1,10 +1,7 @@
 import { Pipe, PipeTransform } from '@angular/core';
 import {DomSanitizer} from '@angular/platform-browser';
 
-@Pipe({
-    name: 'linkify',
-    standalone: false
-})
+@Pipe({ name: 'linkify' })
 export class LinkifyPipe implements PipeTransform {
 
   constructor(private domSanitizer: DomSanitizer) {}

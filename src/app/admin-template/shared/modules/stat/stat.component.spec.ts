@@ -9,8 +9,8 @@ describe('StatComponent', () => {
     beforeEach(
         async(() => {
             TestBed.configureTestingModule({
-                declarations: [StatComponent]
-            }).compileComponents();
+    imports: [StatComponent]
+}).compileComponents();
         })
     );
 

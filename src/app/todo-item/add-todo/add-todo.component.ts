@@ -1,18 +1,19 @@
 import {Component, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import {Todo} from '../model/todo';
 import {ActivatedRoute} from '@angular/router';
 import {TodoService} from '../services/todo.service';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
 import {CommonService} from '../../common/services/common.service';
 import {Subscription} from 'rxjs';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'app-add-todo',
     templateUrl: './add-todo.component.html',
     styleUrls: ['./add-todo.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [ReactiveFormsModule, FormsModule, NgClass]
 })
 export class AddTodoComponent implements OnInit, OnDestroy {
 

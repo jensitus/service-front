@@ -8,8 +8,8 @@ describe('ShowTodoComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ ShowTodoComponent ]
-    })
+    imports: [ShowTodoComponent]
+})
     .compileComponents();
   }));
 

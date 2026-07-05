@@ -4,13 +4,14 @@ import {AlertService} from '../../admin-template/layout/components/alert/service
 import {CommonService} from '../../common/services/common.service';
 import {faTrash} from '@fortawesome/free-solid-svg-icons';
 import {Subscription} from 'rxjs';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
     selector: 'app-simple-todo',
     templateUrl: './simple-todo.component.html',
     styleUrls: ['./simple-todo.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [FaIconComponent]
 })
 export class SimpleTodoComponent implements OnInit, OnDestroy {
 

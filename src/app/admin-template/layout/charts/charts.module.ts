@@ -7,8 +7,7 @@ import { ChartsComponent } from './charts.component';
 import { PageHeaderModule } from '../../shared';
 
 @NgModule({
-    imports: [CommonModule, BaseChartDirective, ChartsRoutingModule, PageHeaderModule],
-    declarations: [ChartsComponent],
+    imports: [CommonModule, BaseChartDirective, ChartsRoutingModule, PageHeaderModule, ChartsComponent],
     providers: [provideCharts(withDefaultRegisterables())]
 })
 export class ChartsModule {}

@@ -1,15 +1,17 @@
 import {Component, Output, EventEmitter, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {Router, NavigationEnd} from '@angular/router';
+import { Router, NavigationEnd, RouterLink, RouterLinkActive } from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {User} from '../../../../auth/model/user';
 import {faCoffee, faUser, faBars, faPowerOff, faTachometerAlt, faChartLine, faBookOpen, faBell, faRightLeft} from '@fortawesome/free-solid-svg-icons';
+import { NgClass } from '@angular/common';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
     selector: 'app-sidebar',
     templateUrl: './sidebar.component.html',
     styleUrls: ['./sidebar.component.scss'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [NgClass, RouterLink, RouterLinkActive, FaIconComponent]
 })
 export class SidebarComponent implements OnInit {
   isActive: boolean;

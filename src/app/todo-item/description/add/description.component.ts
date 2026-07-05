@@ -1,16 +1,19 @@
 import {Component, Input, OnDestroy, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {TodoService} from '../../services/todo.service';
 import {Description} from '../../model/description';
 import {ModalDismissReasons, NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import {Subscription} from 'rxjs';
+import { NgClass } from '@angular/common';
+import { EditDescriptionComponent } from '../edit/edit-description.component';
+import { LinkifyPipe } from '../../../common/pipe/linkify.pipe';
 
 @Component({
     selector: 'app-description',
     templateUrl: './description.component.html',
     styleUrls: ['./description.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [ReactiveFormsModule, NgClass, EditDescriptionComponent, LinkifyPipe]
 })
 export class DescriptionComponent implements OnInit, OnDestroy {
 

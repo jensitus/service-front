@@ -8,8 +8,8 @@ describe('AddItemDueDateComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ AddItemDueDateComponent ]
-    })
+    imports: [AddItemDueDateComponent]
+})
     .compileComponents();
   }));
 

@@ -1,5 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { routerTransition } from '../../../router.animations';
+import { PageHeaderComponent } from '../../shared/modules/page-header/page-header.component';
+import { BaseChartDirective } from 'ng2-charts';
 
 @Component({
     selector: 'app-charts',
@@ -7,7 +9,7 @@ import { routerTransition } from '../../../router.animations';
     styleUrls: ['./charts.component.scss'],
     animations: [routerTransition()],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [PageHeaderComponent, BaseChartDirective]
 })
 export class ChartsComponent implements OnInit {
     // bar chart

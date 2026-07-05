@@ -4,17 +4,22 @@ import {TodoService} from '../services/todo.service';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
 import {CommonService} from '../../common/services/common.service';
 import {Item} from '../model/item';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {User} from '../../auth/model/user';
 import {Todo} from '../model/todo';
 import {Subscription} from 'rxjs';
+import { AlertComponent } from '../../admin-template/layout/components/alert/alert.component';
+import { SimpleTodoComponent } from '../../process/simple-todo/simple-todo.component';
+import { ComplexTodoComponent } from '../../process/complex-todo/complex-todo.component';
+import { NgClass } from '@angular/common';
+import { AddUserComponent } from '../../common/add-user/add-user.component';
 
 @Component({
     selector: 'app-todo',
     templateUrl: './todo.component.html',
     styleUrls: ['./todo.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [AlertComponent, SimpleTodoComponent, ComplexTodoComponent, ReactiveFormsModule, NgClass, AddUserComponent]
 })
 export class TodoComponent implements OnInit, OnDestroy {
 

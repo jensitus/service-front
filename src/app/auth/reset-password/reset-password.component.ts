@@ -1,16 +1,18 @@
 import {Component, OnInit, ChangeDetectionStrategy} from '@angular/core';
-import {ActivatedRoute, Router} from '@angular/router';
-import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 import {UserService} from '../services/user.service';
 import {first} from 'rxjs/operators';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
+import { NavbarComponent } from '../../common/navbar/navbar.component';
+import { NgClass } from '@angular/common';
 
 @Component({
     selector: 'app-reset-password',
     templateUrl: './reset-password.component.html',
     styleUrls: ['./reset-password.component.css'],
     changeDetection: ChangeDetectionStrategy.Eager,
-    standalone: false
+    imports: [NavbarComponent, ReactiveFormsModule, NgClass, RouterLink]
 })
 export class ResetPasswordComponent implements OnInit {
   resetForm: FormGroup;
