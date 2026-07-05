@@ -2,18 +2,20 @@
   <div class="d-flex justify-content-between align-items-center mb-3">
     <h4>Live Crypto Prices</h4>
     <div class="d-flex align-items-center gap-2">
-      <small class="text-muted" *ngIf="lastUpdated">Updated: {{ lastUpdated | date:'HH:mm:ss' }}</small>
+      @if (lastUpdated) {
+        <small class="text-muted">Updated: {{ lastUpdated | date:'HH:mm:ss' }}</small>
+      }
 
       <!-- Currency toggle -->
       <div class="btn-group btn-group-sm" role="group">
         <button type="button" class="btn"
           [class.btn-primary]="currency === 'EUR'"
           [class.btn-outline-primary]="currency !== 'EUR'"
-          (click)="currencyPref.set('EUR')">€ EUR</button>
+        (click)="currencyPref.set('EUR')">€ EUR</button>
         <button type="button" class="btn"
           [class.btn-primary]="currency === 'USD'"
           [class.btn-outline-primary]="currency !== 'USD'"
-          (click)="currencyPref.set('USD')">$ USD</button>
+        (click)="currencyPref.set('USD')">$ USD</button>
       </div>
 
       <button class="btn btn-sm btn-outline-secondary" (click)="forceRefresh()" [disabled]="loading">
@@ -22,46 +24,54 @@
     </div>
   </div>
 
-  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+  @if (error) {
+    <div class="alert alert-danger">{{ error }}</div>
+  }
 
-  <div *ngIf="prices.length === 0 && !loading && !error" class="alert alert-info">
-    No price data yet. Click Refresh to fetch prices from CoinGecko.
-  </div>
+  @if (prices.length === 0 && !loading && !error) {
+    <div class="alert alert-info">
+      No price data yet. Click Refresh to fetch prices from CoinGecko.
+    </div>
+  }
 
   <div class="row">
-    <div class="col-md-6 col-xl-3 mb-3" *ngFor="let p of prices">
-      <div class="card h-100 shadow-sm">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-start">
-            <h5 class="card-title mb-0">{{ p.coinName }}</h5>
-            <small class="text-muted">{{ p.coinId }}</small>
+    @for (p of prices; track p.coinId) {
+      <div class="col-md-6 col-xl-3 mb-3">
+        <div class="card h-100 shadow-sm">
+          <div class="card-body">
+            <div class="d-flex justify-content-between align-items-start">
+              <h5 class="card-title mb-0">{{ p.coinName }}</h5>
+              <small class="text-muted">{{ p.coinId }}</small>
+            </div>
+            <hr class="my-2">
+            <div class="h3 mb-1">
+              {{ currency === 'EUR' ? '€' : '$' }}{{ price(p) | number:'1.2-2' }}
+            </div>
+            <div [class]="priceChangeClass(change24h(p))">
+              <i class="fa"
+                [class.fa-arrow-up]="change24h(p) > 0"
+                [class.fa-arrow-down]="change24h(p) < 0"
+              [class.fa-minus]="change24h(p) === 0"></i>
+              {{ change24h(p) | number:'1.2-2' }}% (24h)
+            </div>
+            <small class="text-muted d-block mt-2">
+              Market Cap: {{ formatMarketCap(marketCap(p)) }}
+            </small>
           </div>
-          <hr class="my-2">
-          <div class="h3 mb-1">
-            {{ currency === 'EUR' ? '€' : '$' }}{{ price(p) | number:'1.2-2' }}
+          <div class="card-footer py-2">
+            <a [routerLink]="['/crypto/coin', p.coinId]" class="btn btn-sm btn-outline-primary w-100">
+              <i class="fa fa-line-chart"></i> Charts &amp; Indicators
+            </a>
           </div>
-          <div [class]="priceChangeClass(change24h(p))">
-            <i class="fa"
-               [class.fa-arrow-up]="change24h(p) > 0"
-               [class.fa-arrow-down]="change24h(p) < 0"
-               [class.fa-minus]="change24h(p) === 0"></i>
-            {{ change24h(p) | number:'1.2-2' }}% (24h)
-          </div>
-          <small class="text-muted d-block mt-2">
-            Market Cap: {{ formatMarketCap(marketCap(p)) }}
-          </small>
-        </div>
-        <div class="card-footer py-2">
-          <a [routerLink]="['/crypto/coin', p.coinId]" class="btn btn-sm btn-outline-primary w-100">
-            <i class="fa fa-line-chart"></i> Charts &amp; Indicators
-          </a>
         </div>
       </div>
-    </div>
+    }
   </div>
 
-  <div *ngIf="loading && prices.length === 0" class="text-center py-5">
-    <div class="spinner-border text-primary" role="status"></div>
-    <p class="mt-2 text-muted">Loading prices...</p>
-  </div>
+  @if (loading && prices.length === 0) {
+    <div class="text-center py-5">
+      <div class="spinner-border text-primary" role="status"></div>
+      <p class="mt-2 text-muted">Loading prices...</p>
+    </div>
+  }
 </div>

@@ -7,195 +7,227 @@
         <button type="button" class="btn"
           [class.btn-primary]="currency === 'EUR'"
           [class.btn-outline-primary]="currency !== 'EUR'"
-          (click)="currencyPref.set('EUR')">€ EUR</button>
+        (click)="currencyPref.set('EUR')">€ EUR</button>
         <button type="button" class="btn"
           [class.btn-primary]="currency === 'USD'"
           [class.btn-outline-primary]="currency !== 'USD'"
-          (click)="currencyPref.set('USD')">$ USD</button>
+        (click)="currencyPref.set('USD')">$ USD</button>
       </div>
       <button class="btn btn-primary btn-sm" (click)="showForm = !showForm">
-        <fa-icon [icon]="faPlus" *ngIf="!showForm"></fa-icon>
+        @if (!showForm) {
+          <fa-icon [icon]="faPlus"></fa-icon>
+        }
         {{ showForm ? 'Cancel' : 'Log Trade' }}
       </button>
     </div>
   </div>
 
   <!-- Portfolio Summary -->
-  <div class="card mb-4 border-0 bg-light" *ngIf="portfolio && portfolio.positions.length > 0">
-    <div class="card-body py-3">
-      <div class="row align-items-center mb-2">
-        <div class="col">
-          <strong>Portfolio Summary</strong>
-          <small class="text-muted ms-2">(open positions · P&amp;L vs. market in {{ currency }})</small>
+  @if (portfolio && portfolio.positions.length > 0) {
+    <div class="card mb-4 border-0 bg-light">
+      <div class="card-body py-3">
+        <div class="row align-items-center mb-2">
+          <div class="col">
+            <strong>Portfolio Summary</strong>
+            <small class="text-muted ms-2">(open positions · P&amp;L vs. market in {{ currency }})</small>
+          </div>
+          <div class="col-auto text-end">
+            <span class="me-3">
+              Invested: <strong>{{ portfolioSym() }}{{ portfolio.totalInvested | number:'1.2-2' }}</strong>
+            </span>
+            <span class="me-3">
+              Value: <strong>{{ portfolioSym() }}{{ totalValue() | number:'1.2-2' }}</strong>
+            </span>
+            <span [class]="pnlClass(totalPnl())">
+              <strong>
+                {{ totalPnl() >= 0 ? '+' : '' }}{{ portfolioSym() }}{{ totalPnl() | number:'1.2-2' }}
+                ({{ totalPnlPct() >= 0 ? '+' : '' }}{{ totalPnlPct() | number:'1.2-2' }}%)
+              </strong>
+            </span>
+          </div>
         </div>
-        <div class="col-auto text-end">
-          <span class="me-3">
-            Invested: <strong>{{ portfolioSym() }}{{ portfolio.totalInvested | number:'1.2-2' }}</strong>
-          </span>
-          <span class="me-3">
-            Value: <strong>{{ portfolioSym() }}{{ totalValue() | number:'1.2-2' }}</strong>
-          </span>
-          <span [class]="pnlClass(totalPnl())">
-            <strong>
-              {{ totalPnl() >= 0 ? '+' : '' }}{{ portfolioSym() }}{{ totalPnl() | number:'1.2-2' }}
-              ({{ totalPnlPct() >= 0 ? '+' : '' }}{{ totalPnlPct() | number:'1.2-2' }}%)
-            </strong>
-          </span>
-        </div>
-      </div>
-      <div class="row g-2">
-        <div class="col-sm-6 col-lg-3" *ngFor="let pos of portfolio.positions">
-          <div class="card border h-100">
-            <div class="card-body py-2 px-3">
-              <div class="d-flex justify-content-between align-items-start">
-                <div>
-                  <strong>{{ pos.coinName }}</strong>
-                  <div class="small text-muted">{{ pos.netQuantity }} units</div>
-                  <div class="small">Avg: {{ portfolioSym() }}{{ pos.avgBuyPrice | number:'1.2-2' }}</div>
-                  <div class="small">Now: {{ portfolioSym() }}{{ (currency === 'EUR' ? pos.currentPriceEur : pos.currentPrice) | number:'1.2-2' }}</div>
-                </div>
-                <div class="text-end">
-                  <div class="small text-muted">{{ portfolioSym() }}{{ portfolioValue(pos) | number:'1.2-2' }}</div>
-                  <div class="small fw-bold" [class]="pnlClass(portfolioPnl(pos))">
-                    {{ portfolioPnl(pos) >= 0 ? '+' : '' }}{{ portfolioSym() }}{{ portfolioPnl(pos) | number:'1.2-2' }}
-                  </div>
-                  <div class="small" [class]="pnlClass(portfolioPnlPct(pos))">
-                    {{ portfolioPnlPct(pos) >= 0 ? '+' : '' }}{{ portfolioPnlPct(pos) | number:'1.2-2' }}%
+        <div class="row g-2">
+          @for (pos of portfolio.positions; track pos.coinId) {
+            <div class="col-sm-6 col-lg-3">
+              <div class="card border h-100">
+                <div class="card-body py-2 px-3">
+                  <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                      <strong>{{ pos.coinName }}</strong>
+                      <div class="small text-muted">{{ pos.netQuantity }} units</div>
+                      <div class="small">Avg: {{ portfolioSym() }}{{ pos.avgBuyPrice | number:'1.2-2' }}</div>
+                      <div class="small">Now: {{ portfolioSym() }}{{ (currency === 'EUR' ? pos.currentPriceEur : pos.currentPrice) | number:'1.2-2' }}</div>
+                    </div>
+                    <div class="text-end">
+                      <div class="small text-muted">{{ portfolioSym() }}{{ portfolioValue(pos) | number:'1.2-2' }}</div>
+                      <div class="small fw-bold" [class]="pnlClass(portfolioPnl(pos))">
+                        {{ portfolioPnl(pos) >= 0 ? '+' : '' }}{{ portfolioSym() }}{{ portfolioPnl(pos) | number:'1.2-2' }}
+                      </div>
+                      <div class="small" [class]="pnlClass(portfolioPnlPct(pos))">
+                        {{ portfolioPnlPct(pos) >= 0 ? '+' : '' }}{{ portfolioPnlPct(pos) | number:'1.2-2' }}%
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </div>
+          }
         </div>
       </div>
     </div>
-  </div>
+  }
 
   <!-- Add Trade Form -->
-  <div class="card mb-4" *ngIf="showForm">
-    <div class="card-header"><strong>New Trade</strong></div>
-    <div class="card-body">
-      <form (ngSubmit)="submitTrade()" #tradeForm="ngForm">
-        <div class="row g-3">
-          <div class="col-md-2">
-            <label class="form-label">Coin</label>
-            <select class="form-select" [(ngModel)]="form.coinId" name="coinId" required>
-              <option *ngFor="let c of COINS" [value]="c">{{ c | titlecase }}</option>
-            </select>
+  @if (showForm) {
+    <div class="card mb-4">
+      <div class="card-header"><strong>New Trade</strong></div>
+      <div class="card-body">
+        <form (ngSubmit)="submitTrade()" #tradeForm="ngForm">
+          <div class="row g-3">
+            <div class="col-md-2">
+              <label class="form-label">Coin</label>
+              <select class="form-select" [(ngModel)]="form.coinId" name="coinId" required>
+                @for (c of COINS; track c) {
+                  <option [value]="c">{{ c | titlecase }}</option>
+                }
+              </select>
+            </div>
+            <div class="col-md-1">
+              <label class="form-label">Side</label>
+              <select class="form-select" [(ngModel)]="form.side" name="side" required>
+                <option value="BUY">BUY</option>
+                <option value="SELL">SELL</option>
+              </select>
+            </div>
+            <div class="col-md-1">
+              <label class="form-label">Currency</label>
+              <select class="form-select" [(ngModel)]="form.currency" name="currency">
+                <option value="EUR">EUR</option>
+                <option value="USD">USD</option>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Quantity</label>
+              <input type="number" class="form-control" [(ngModel)]="form.quantity" name="quantity"
+                step="any" min="0" required>
+            </div>
+            <div class="col-md-2">
+              <label class="form-label">Price per unit ({{ form.currency }})</label>
+              <input type="number" class="form-control" [(ngModel)]="form.pricePerUnit" name="pricePerUnit"
+                step="any" min="0" required>
+            </div>
+            <div class="col-md-1">
+              <label class="form-label">Fee</label>
+              <input type="number" class="form-control" [(ngModel)]="form.fee" name="fee" step="any" min="0">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Date &amp; Time</label>
+              <input type="datetime-local" class="form-control" [(ngModel)]="form.tradedAt" name="tradedAt" required>
+            </div>
+            <div class="col-12">
+              <label class="form-label">Note</label>
+              <input type="text" class="form-control" [(ngModel)]="form.note" name="note"
+                placeholder="Optional note about this trade">
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-success" [disabled]="tradeForm.invalid">Save Trade</button>
+            </div>
           </div>
-          <div class="col-md-1">
-            <label class="form-label">Side</label>
-            <select class="form-select" [(ngModel)]="form.side" name="side" required>
-              <option value="BUY">BUY</option>
-              <option value="SELL">SELL</option>
-            </select>
-          </div>
-          <div class="col-md-1">
-            <label class="form-label">Currency</label>
-            <select class="form-select" [(ngModel)]="form.currency" name="currency">
-              <option value="EUR">EUR</option>
-              <option value="USD">USD</option>
-            </select>
-          </div>
-          <div class="col-md-2">
-            <label class="form-label">Quantity</label>
-            <input type="number" class="form-control" [(ngModel)]="form.quantity" name="quantity"
-                   step="any" min="0" required>
-          </div>
-          <div class="col-md-2">
-            <label class="form-label">Price per unit ({{ form.currency }})</label>
-            <input type="number" class="form-control" [(ngModel)]="form.pricePerUnit" name="pricePerUnit"
-                   step="any" min="0" required>
-          </div>
-          <div class="col-md-1">
-            <label class="form-label">Fee</label>
-            <input type="number" class="form-control" [(ngModel)]="form.fee" name="fee" step="any" min="0">
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">Date &amp; Time</label>
-            <input type="datetime-local" class="form-control" [(ngModel)]="form.tradedAt" name="tradedAt" required>
-          </div>
-          <div class="col-12">
-            <label class="form-label">Note</label>
-            <input type="text" class="form-control" [(ngModel)]="form.note" name="note"
-                   placeholder="Optional note about this trade">
-          </div>
-          <div class="col-12">
-            <button type="submit" class="btn btn-success" [disabled]="tradeForm.invalid">Save Trade</button>
-          </div>
-        </div>
-      </form>
+        </form>
+      </div>
     </div>
-  </div>
+  }
 
   <!-- Trades Table -->
-  <div *ngIf="loading" class="text-center py-4">
-    <div class="spinner-border text-primary" role="status"></div>
-  </div>
+  @if (loading) {
+    <div class="text-center py-4">
+      <div class="spinner-border text-primary" role="status"></div>
+    </div>
+  }
 
-  <div *ngIf="!loading && trades.length === 0" class="alert alert-info">
-    No trades yet. Log your first trade to get started.
-  </div>
+  @if (!loading && trades.length === 0) {
+    <div class="alert alert-info">
+      No trades yet. Log your first trade to get started.
+    </div>
+  }
 
-  <div class="table-responsive" *ngIf="!loading && trades.length > 0">
-    <table class="table table-hover align-middle">
-      <thead class="table-light">
-        <tr>
-          <th>Date</th>
-          <th>Coin</th>
-          <th>Side</th>
-          <th>Qty</th>
-          <th>Entry price</th>
-          <th>Total cost</th>
-          <th>Fee</th>
-          <th>Market now</th>
-          <th>P&amp;L</th>
-          <th>Note</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr *ngFor="let t of trades">
-          <td><small>{{ t.tradedAt | date:'dd.MM.yy HH:mm' }}</small></td>
-          <td>
-            <strong>{{ t.coinId | titlecase }}</strong>
-            <span class="badge bg-info text-dark ms-1" *ngIf="t.source === 'BITPANDA'"
-                  title="Imported from Bitpanda">
-              <i class="fa fa-right-left"></i> Bitpanda
-            </span>
-          </td>
-          <td>
-            <span class="badge" [class.bg-success]="t.side === 'BUY'" [class.bg-danger]="t.side === 'SELL'">
-              {{ t.side }}
-            </span>
-          </td>
-          <td>{{ t.quantity }}</td>
-          <td>{{ sym(t) }}{{ t.pricePerUnit | number:'1.2-2' }} <small class="text-muted">{{ t.currency || 'EUR' }}</small></td>
-          <td>{{ sym(t) }}{{ t.totalValue | number:'1.2-2' }}</td>
-          <td><small>{{ t.fee ? (sym(t) + (t.fee | number:'1.2-2')) : '—' }}</small></td>
-          <td>
-            <small *ngIf="currentPrice(t) != null">{{ sym(t) }}{{ currentPrice(t) | number:'1.2-2' }}</small>
-            <small *ngIf="currentPrice(t) == null" class="text-muted">—</small>
-          </td>
-          <td>
-            <span *ngIf="t.side === 'BUY' && t.unrealizedPnl != null"
-                  class="fw-bold" [class]="pnlClass(t.unrealizedPnl)">
-              {{ t.unrealizedPnl >= 0 ? '+' : '' }}{{ sym(t) }}{{ t.unrealizedPnl | number:'1.2-2' }}
-            </span>
-            <small *ngIf="t.side === 'SELL'" class="text-muted">Realized</small>
-            <small *ngIf="t.side === 'BUY' && t.unrealizedPnl == null" class="text-muted">—</small>
-          </td>
-          <td><small class="text-muted">{{ t.note }}</small></td>
-          <td>
-            <button class="btn btn-outline-danger btn-sm" (click)="deleteTrade(t.id)">
-              <fa-icon [icon]="faTrash" *ngIf="t.source === 'BITPANDA'"></fa-icon>
-            </button>
-          </td>
-        </tr>
-      </tbody>
-    </table>
-    <small class="text-muted">
-      P&amp;L for BUY trades compares current market price in the trade's entry currency vs. the price you paid.
-    </small>
-  </div>
+  @if (!loading && trades.length > 0) {
+    <div class="table-responsive">
+      <table class="table table-hover align-middle">
+        <thead class="table-light">
+          <tr>
+            <th>Date</th>
+            <th>Coin</th>
+            <th>Side</th>
+            <th>Qty</th>
+            <th>Entry price</th>
+            <th>Total cost</th>
+            <th>Fee</th>
+            <th>Market now</th>
+            <th>P&amp;L</th>
+            <th>Note</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (t of trades; track t.id) {
+            <tr>
+              <td><small>{{ t.tradedAt | date:'dd.MM.yy HH:mm' }}</small></td>
+              <td>
+                <strong>{{ t.coinId | titlecase }}</strong>
+                @if (t.source === 'BITPANDA') {
+                  <span class="badge bg-info text-dark ms-1"
+                    title="Imported from Bitpanda">
+                    <i class="fa fa-right-left"></i> Bitpanda
+                  </span>
+                }
+              </td>
+              <td>
+                <span class="badge" [class.bg-success]="t.side === 'BUY'" [class.bg-danger]="t.side === 'SELL'">
+                  {{ t.side }}
+                </span>
+              </td>
+              <td>{{ t.quantity }}</td>
+              <td>{{ sym(t) }}{{ t.pricePerUnit | number:'1.2-2' }} <small class="text-muted">{{ t.currency || 'EUR' }}</small></td>
+              <td>{{ sym(t) }}{{ t.totalValue | number:'1.2-2' }}</td>
+              <td><small>{{ t.fee ? (sym(t) + (t.fee | number:'1.2-2')) : '—' }}</small></td>
+              <td>
+                @if (currentPrice(t) != null) {
+                  <small>{{ sym(t) }}{{ currentPrice(t) | number:'1.2-2' }}</small>
+                }
+                @if (currentPrice(t) == null) {
+                  <small class="text-muted">—</small>
+                }
+              </td>
+              <td>
+                @if (t.side === 'BUY' && t.unrealizedPnl != null) {
+                  <span
+                    class="fw-bold" [class]="pnlClass(t.unrealizedPnl)">
+                    {{ t.unrealizedPnl >= 0 ? '+' : '' }}{{ sym(t) }}{{ t.unrealizedPnl | number:'1.2-2' }}
+                  </span>
+                }
+                @if (t.side === 'SELL') {
+                  <small class="text-muted">Realized</small>
+                }
+                @if (t.side === 'BUY' && t.unrealizedPnl == null) {
+                  <small class="text-muted">—</small>
+                }
+              </td>
+              <td><small class="text-muted">{{ t.note }}</small></td>
+              <td>
+                <button class="btn btn-outline-danger btn-sm" (click)="deleteTrade(t.id)">
+                  @if (t.source === 'BITPANDA') {
+                    <fa-icon [icon]="faTrash"></fa-icon>
+                  }
+                </button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+      <small class="text-muted">
+        P&amp;L for BUY trades compares current market price in the trade's entry currency vs. the price you paid.
+      </small>
+    </div>
+  }
 </div>

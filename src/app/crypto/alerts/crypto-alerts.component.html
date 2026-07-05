@@ -7,90 +7,105 @@
     </button>
   </div>
 
-  <div class="card mb-3 border-info" *ngIf="!showForm">
-    <div class="card-body py-2 px-3">
-      <small class="text-muted">
-        <i class="fa fa-info-circle text-info"></i>
-        Alerts are checked every 2 minutes when the backend fetches new prices.
-        A triggered alert is deactivated automatically.
-      </small>
-    </div>
-  </div>
-
-  <!-- Add Alert Form -->
-  <div class="card mb-4" *ngIf="showForm">
-    <div class="card-header"><strong>New Price Alert</strong></div>
-    <div class="card-body">
-      <form (ngSubmit)="submitAlert()" #alertForm="ngForm">
-        <div class="row g-3">
-          <div class="col-md-3">
-            <label class="form-label">Coin</label>
-            <select class="form-select" [(ngModel)]="form.coinId" name="coinId" required>
-              <option *ngFor="let c of COINS" [value]="c">{{ c | titlecase }}</option>
-            </select>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">Alert me when price is</label>
-            <select class="form-select" [(ngModel)]="form.condition" name="condition" required>
-              <option value="ABOVE">Above target</option>
-              <option value="BELOW">Below target</option>
-            </select>
-          </div>
-          <div class="col-md-3">
-            <label class="form-label">Target Price ($)</label>
-            <input type="number" class="form-control" [(ngModel)]="form.targetPrice" name="targetPrice"
-                   step="any" min="0" required placeholder="e.g. 50000">
-          </div>
-          <div class="col-12">
-            <button type="submit" class="btn btn-success" [disabled]="alertForm.invalid">
-              Create Alert
-            </button>
-          </div>
-        </div>
-      </form>
-    </div>
-  </div>
-
-  <!-- Alerts List -->
-  <div *ngIf="loading" class="text-center py-4">
-    <div class="spinner-border text-primary" role="status"></div>
-  </div>
-
-  <div *ngIf="!loading && alerts.length === 0" class="alert alert-info">
-    No alerts yet. Create one to get notified when a coin hits your target price.
-  </div>
-
-  <div class="row" *ngIf="!loading && alerts.length > 0">
-    <div class="col-md-6 col-xl-4 mb-3" *ngFor="let alert of alerts">
-      <div class="card h-100" [class.border-warning]="alert.triggered"
-           [class.border-success]="alert.active && !alert.triggered">
-        <div class="card-body">
-          <div class="d-flex justify-content-between align-items-start">
-            <div>
-              <h6 class="mb-0">{{ alert.coinId | titlecase }}</h6>
-              <div class="mt-1">
-                <span class="text-muted me-1">{{ alert.condition === 'ABOVE' ? 'Above' : 'Below' }}</span>
-                <strong>${{ alert.targetPrice | number:'1.2-2' }}</strong>
-              </div>
-            </div>
-            <span class="badge" [class]="statusClass(alert)">{{ statusLabel(alert) }}</span>
-          </div>
-          <small class="text-muted d-block mt-2">
-            Created: {{ alert.createdAt | date:'dd.MM.yy HH:mm' }}
-          </small>
-        </div>
-        <div class="card-footer d-flex gap-2 py-2">
-          <button class="btn btn-sm btn-outline-secondary" (click)="toggle(alert.id)"
-                  *ngIf="!alert.triggered"
-                  [title]="alert.active ? 'Pause alert' : 'Reactivate alert'">
-            <i class="fa" [class.fa-pause]="alert.active" [class.fa-play]="!alert.active"></i>
-            {{ alert.active ? 'Pause' : 'Activate' }}
-          </button>
-          <button class="btn btn-sm btn-outline-danger" (click)="deleteAlert(alert.id)">
-            <i class="fa fa-trash"></i> Delete
-          </button>
-        </div>
+  @if (!showForm) {
+    <div class="card mb-3 border-info">
+      <div class="card-body py-2 px-3">
+        <small class="text-muted">
+          <i class="fa fa-info-circle text-info"></i>
+          Alerts are checked every 2 minutes when the backend fetches new prices.
+          A triggered alert is deactivated automatically.
+        </small>
       </div>
     </div>
-  </div>
+  }
+
+  <!-- Add Alert Form -->
+  @if (showForm) {
+    <div class="card mb-4">
+      <div class="card-header"><strong>New Price Alert</strong></div>
+      <div class="card-body">
+        <form (ngSubmit)="submitAlert()" #alertForm="ngForm">
+          <div class="row g-3">
+            <div class="col-md-3">
+              <label class="form-label">Coin</label>
+              <select class="form-select" [(ngModel)]="form.coinId" name="coinId" required>
+                @for (c of COINS; track c) {
+                  <option [value]="c">{{ c | titlecase }}</option>
+                }
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Alert me when price is</label>
+              <select class="form-select" [(ngModel)]="form.condition" name="condition" required>
+                <option value="ABOVE">Above target</option>
+                <option value="BELOW">Below target</option>
+              </select>
+            </div>
+            <div class="col-md-3">
+              <label class="form-label">Target Price ($)</label>
+              <input type="number" class="form-control" [(ngModel)]="form.targetPrice" name="targetPrice"
+                step="any" min="0" required placeholder="e.g. 50000">
+            </div>
+            <div class="col-12">
+              <button type="submit" class="btn btn-success" [disabled]="alertForm.invalid">
+                Create Alert
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  }
+
+  <!-- Alerts List -->
+  @if (loading) {
+    <div class="text-center py-4">
+      <div class="spinner-border text-primary" role="status"></div>
+    </div>
+  }
+
+  @if (!loading && alerts.length === 0) {
+    <div class="alert alert-info">
+      No alerts yet. Create one to get notified when a coin hits your target price.
+    </div>
+  }
+
+  @if (!loading && alerts.length > 0) {
+    <div class="row">
+      @for (alert of alerts; track alert.id) {
+        <div class="col-md-6 col-xl-4 mb-3">
+          <div class="card h-100" [class.border-warning]="alert.triggered"
+            [class.border-success]="alert.active && !alert.triggered">
+            <div class="card-body">
+              <div class="d-flex justify-content-between align-items-start">
+                <div>
+                  <h6 class="mb-0">{{ alert.coinId | titlecase }}</h6>
+                  <div class="mt-1">
+                    <span class="text-muted me-1">{{ alert.condition === 'ABOVE' ? 'Above' : 'Below' }}</span>
+                    <strong>${{ alert.targetPrice | number:'1.2-2' }}</strong>
+                  </div>
+                </div>
+                <span class="badge" [class]="statusClass(alert)">{{ statusLabel(alert) }}</span>
+              </div>
+              <small class="text-muted d-block mt-2">
+                Created: {{ alert.createdAt | date:'dd.MM.yy HH:mm' }}
+              </small>
+            </div>
+            <div class="card-footer d-flex gap-2 py-2">
+              @if (!alert.triggered) {
+                <button class="btn btn-sm btn-outline-secondary" (click)="toggle(alert.id)"
+                  [title]="alert.active ? 'Pause alert' : 'Reactivate alert'">
+                  <i class="fa" [class.fa-pause]="alert.active" [class.fa-play]="!alert.active"></i>
+                  {{ alert.active ? 'Pause' : 'Activate' }}
+                </button>
+              }
+              <button class="btn btn-sm btn-outline-danger" (click)="deleteAlert(alert.id)">
+                <i class="fa fa-trash"></i> Delete
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
 </div>
