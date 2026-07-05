@@ -12,6 +12,22 @@
             <fa-icon [icon]="faBars"></fa-icon>&nbsp;
             <span>{{ 'Charts' }}</span>
         </a>
+        <a [routerLink]="['/crypto/prices']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <fa-icon [icon]="faChartLine"></fa-icon>&nbsp;
+            <span>Crypto Prices</span>
+        </a>
+        <a [routerLink]="['/crypto/trades']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <fa-icon [icon]="faBookOpen"></fa-icon>&nbsp;
+            <span>Trade Journal</span>
+        </a>
+        <a [routerLink]="['/crypto/alerts']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <fa-icon [icon]="faBell"></fa-icon>&nbsp;
+            <span>Price Alerts</span>
+        </a>
+        <a [routerLink]="['/crypto/bitpanda']" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <fa-icon [icon]="faRightLeft"></fa-icon>&nbsp;
+            <span>Bitpanda Import</span>
+        </a>
       <a [routerLink]="['/login']" [routerLinkActive]="['router-link-active']" class="list-group-item">
         <fa-icon [icon]="faPowerOff"></fa-icon>&nbsp;
         <span>{{ 'Log Out' }}</span>

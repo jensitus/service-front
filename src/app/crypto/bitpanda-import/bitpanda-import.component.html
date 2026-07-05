@@ -1,0 +1,116 @@
+<div class="container-fluid mt-3">
+  <h4>Bitpanda Import</h4>
+
+  <div *ngIf="loadingStatus" class="text-center py-4">
+    <div class="spinner-border text-primary" role="status"></div>
+  </div>
+
+  <div *ngIf="error" class="alert alert-danger">{{ error }}</div>
+
+  <!-- NOT CONNECTED: paste + save key -->
+  <ng-container *ngIf="!loadingStatus && status && !status.hasKey">
+    <div class="alert alert-info">
+      Connect your Bitpanda account to import your trades. Your API key is stored
+      <strong>encrypted</strong> and used only to read your trade history — it can never move funds.
+    </div>
+
+    <div class="card mb-4">
+      <div class="card-header"><strong>Connect Bitpanda</strong></div>
+      <div class="card-body">
+        <p class="text-muted small mb-3">
+          Generate a <strong>read-only</strong> API key in Bitpanda under <em>Settings → API</em>
+          (the <strong>Trading</strong> scope lets it read your trade history). Paste it below.
+        </p>
+        <div class="row g-2 align-items-end">
+          <div class="col-md-8">
+            <label class="form-label">Bitpanda API key</label>
+            <input type="password" class="form-control key-input" [(ngModel)]="apiKey"
+                   name="apiKey" placeholder="paste your read-only key" autocomplete="off">
+          </div>
+          <div class="col-md-4">
+            <button class="btn btn-primary" (click)="connect()" [disabled]="connecting || !apiKey.trim()">
+              <i class="fa" [class.fa-link]="!connecting" [class.fa-spinner]="connecting" [class.fa-spin]="connecting"></i>
+              {{ connecting ? 'Validating...' : 'Connect' }}
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+
+  <!-- CONNECTED: sync + manage -->
+  <ng-container *ngIf="!loadingStatus && status && status.hasKey">
+    <div class="card mb-4">
+      <div class="card-body">
+        <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+          <div>
+            <span class="badge bg-success mb-1"><i class="fa fa-check"></i> Bitpanda connected</span>
+            <div class="small text-muted">
+              Last synced:
+              <strong *ngIf="status.lastSyncedAt">{{ status.lastSyncedAt | date:'dd.MM.yy HH:mm' }}</strong>
+              <em *ngIf="!status.lastSyncedAt">never</em>
+            </div>
+          </div>
+          <div class="d-flex gap-2">
+            <button class="btn btn-primary" (click)="sync()" [disabled]="syncing || cooldownRemaining > 0">
+              <i class="fa" [class.fa-refresh]="!syncing" [class.fa-spinner]="syncing" [class.fa-spin]="syncing"></i>
+              {{ syncing ? 'Syncing...' : (cooldownRemaining > 0 ? 'Wait ' + cooldownRemaining + 's' : 'Sync now') }}
+            </button>
+            <button class="btn btn-outline-danger" (click)="disconnect()" [disabled]="syncing">
+              Remove key
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Sync result -->
+    <div *ngIf="syncResult" class="card mb-4 border-success">
+      <div class="card-header bg-success bg-opacity-10">
+        <i class="fa fa-check-circle text-success"></i> <strong>Sync complete</strong>
+      </div>
+      <div class="card-body">
+        <div class="row text-center g-3">
+          <div class="col">
+            <div class="h4 mb-0 text-success">{{ syncResult.imported }}</div>
+            <small class="text-muted">Imported</small>
+          </div>
+          <div class="col">
+            <div class="h4 mb-0">{{ syncResult.skippedDuplicates }}</div>
+            <small class="text-muted">Already imported</small>
+          </div>
+          <div class="col">
+            <div class="h4 mb-0">{{ syncResult.skippedUntracked }}</div>
+            <small class="text-muted">Untracked coin</small>
+          </div>
+          <div class="col">
+            <div class="h4 mb-0">{{ syncResult.skippedUnfinished }}</div>
+            <small class="text-muted">Unfinished</small>
+          </div>
+          <div class="col">
+            <div class="h4 mb-0">{{ syncResult.totalFetched }}</div>
+            <small class="text-muted">Total from Bitpanda</small>
+          </div>
+        </div>
+        <hr>
+        <p class="mb-0">
+          <span *ngIf="syncResult.imported > 0">
+            <i class="fa fa-book-open"></i>
+            Head to the <a routerLink="/crypto/trades">Trade Journal</a> to see your imported trades.
+          </span>
+          <span *ngIf="syncResult.imported === 0" class="text-muted">
+            Nothing new to import — your journal is already up to date.
+          </span>
+        </p>
+      </div>
+    </div>
+
+    <div class="alert alert-light border">
+      <small class="text-muted">
+        Syncing is safe to run repeatedly — trades already imported are skipped (matched by Bitpanda's
+        trade ID). Only Bitcoin, Litecoin, Ethereum and XRP are imported; other coins are counted as
+        "untracked" and skipped. Imported amounts are treated as EUR.
+      </small>
+    </div>
+  </ng-container>
+</div>

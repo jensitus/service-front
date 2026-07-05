@@ -2,7 +2,7 @@ import {Component, Output, EventEmitter, OnInit, ChangeDetectionStrategy} from '
 import {Router, NavigationEnd} from '@angular/router';
 import {TranslateService} from '@ngx-translate/core';
 import {User} from '../../../../auth/model/user';
-import {faCoffee, faUser, faBars, faPowerOff, faTachometerAlt} from '@fortawesome/free-solid-svg-icons';
+import {faCoffee, faUser, faBars, faPowerOff, faTachometerAlt, faChartLine, faBookOpen, faBell, faRightLeft} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
     selector: 'app-sidebar',
@@ -22,6 +22,10 @@ export class SidebarComponent implements OnInit {
   faBars = faBars;
   faPowerOff = faPowerOff;
   faTachometerAlt = faTachometerAlt;
+  faChartLine = faChartLine;
+  faBookOpen = faBookOpen;
+  faBell = faBell;
+  faRightLeft = faRightLeft;
 
   @Output() collapsedEvent = new EventEmitter<boolean>();
 
