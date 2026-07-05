@@ -5,12 +5,15 @@ import { CurrencyPreferenceService, Currency } from '../services/currency-prefer
 import { Trade } from '../models/trade';
 import { PortfolioSummary } from '../models/portfolio';
 import {faPlus, faTrash} from '@fortawesome/free-solid-svg-icons';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-trade-journal',
   templateUrl: './trade-journal.component.html',
   styleUrls: ['./trade-journal.component.css'],
-  standalone: false
+  imports: [CommonModule, FormsModule, FaIconComponent]
 })
 export class TradeJournalComponent implements OnInit, OnDestroy {
 

@@ -5,12 +5,15 @@ import { CryptoService } from '../services/crypto.service';
 import { CurrencyPreferenceService, Currency } from '../services/currency-preference.service';
 import { LivePrice } from '../models/live-price';
 import {faSyncAlt} from '@fortawesome/free-solid-svg-icons';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 
 @Component({
   selector: 'app-crypto-dashboard',
   templateUrl: './crypto-dashboard.component.html',
   styleUrls: ['./crypto-dashboard.component.css'],
-  standalone: false
+  imports: [CommonModule, RouterModule, FaIconComponent]
 })
 export class CryptoDashboardComponent implements OnInit, OnDestroy {
 
@@ -19,6 +22,7 @@ export class CryptoDashboardComponent implements OnInit, OnDestroy {
   error: string = null;
   lastUpdated: Date = null;
   currency: Currency = 'EUR';
+  protected readonly faSyncAlt = faSyncAlt;
   private refreshSub: Subscription;
   private currencySub: Subscription;
 
@@ -85,8 +89,8 @@ export class CryptoDashboardComponent implements OnInit, OnDestroy {
   }
 
   priceChangeClass(change: number): string {
-    if (change > 0) return 'text-success';
-    if (change < 0) return 'text-danger';
+    if (change > 0) { return 'text-success'; }
+    if (change < 0) { return 'text-danger'; }
     return 'text-muted';
   }
 
@@ -103,12 +107,11 @@ export class CryptoDashboardComponent implements OnInit, OnDestroy {
   }
 
   formatMarketCap(value: number): string {
-    if (!value) return '—';
+    if (!value) { return '—'; }
     const sym = this.currency === 'EUR' ? '€' : '$';
-    if (value >= 1_000_000_000_000) return `${sym}${(value / 1_000_000_000_000).toFixed(2)}T`;
-    if (value >= 1_000_000_000)     return `${sym}${(value / 1_000_000_000).toFixed(2)}B`;
+    if (value >= 1_000_000_000_000) { return `${sym}${(value / 1_000_000_000_000).toFixed(2)}T`; }
+    if (value >= 1_000_000_000) {     return `${sym}${(value / 1_000_000_000).toFixed(2)}B`; }
     return `${sym}${value.toLocaleString()}`;
   }
 
-  protected readonly faSyncAlt = faSyncAlt;
 }

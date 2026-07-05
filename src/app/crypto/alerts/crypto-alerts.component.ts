@@ -1,4 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { CryptoService } from '../services/crypto.service';
 import { PriceAlert } from '../models/price-alert';
 
@@ -6,7 +8,7 @@ import { PriceAlert } from '../models/price-alert';
   selector: 'app-crypto-alerts',
   templateUrl: './crypto-alerts.component.html',
   styleUrls: ['./crypto-alerts.component.css'],
-  standalone: false
+  imports: [CommonModule, FormsModule]
 })
 export class CryptoAlertsComponent implements OnInit {
 

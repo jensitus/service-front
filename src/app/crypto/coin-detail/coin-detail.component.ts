@@ -1,5 +1,8 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { BaseChartDirective } from 'ng2-charts';
 import { Subscription } from 'rxjs';
 import { ChartConfiguration } from 'chart.js';
 import { CryptoService } from '../services/crypto.service';
@@ -11,7 +14,7 @@ import { SupportResistance } from '../models/support-resistance';
   selector: 'app-coin-detail',
   templateUrl: './coin-detail.component.html',
   styleUrls: ['./coin-detail.component.css'],
-  standalone: false
+  imports: [CommonModule, FormsModule, RouterModule, BaseChartDirective]
 })
 export class CoinDetailComponent implements OnInit, OnDestroy {
 

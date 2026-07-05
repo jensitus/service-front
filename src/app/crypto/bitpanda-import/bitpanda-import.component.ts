@@ -1,4 +1,7 @@
 import { Component, OnInit, OnDestroy, ChangeDetectorRef } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { RouterModule } from '@angular/router';
 import { CryptoService } from '../services/crypto.service';
 import { BitpandaCredentialStatus, BitpandaSyncResult } from '../models/bitpanda';
 
@@ -6,7 +9,7 @@ import { BitpandaCredentialStatus, BitpandaSyncResult } from '../models/bitpanda
   selector: 'app-bitpanda-import',
   templateUrl: './bitpanda-import.component.html',
   styleUrls: ['./bitpanda-import.component.css'],
-  standalone: false
+  imports: [CommonModule, FormsModule, RouterModule]
 })
 export class BitpandaImportComponent implements OnInit, OnDestroy {
 

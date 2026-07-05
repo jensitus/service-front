@@ -20,7 +20,7 @@ const routes: Routes = [
       {path: 'users/:username/edit', component: EditUserComponent},
       {path: 'users/:username/changepw', component: ChangePasswordComponent},
       { path: 'charts', loadChildren: () => import('./charts/charts.module').then(m => m.ChartsModule) },
-      { path: 'crypto', loadChildren: () => import('../../crypto/crypto.module').then(m => m.CryptoModule) },
+      { path: 'crypto', loadChildren: () => import('../../crypto/crypto.routes').then(m => m.CRYPTO_ROUTES) },
       /*            { path: 'tables', loadChildren: () => import('./tables/tables.module').then(m => m.TablesModule) },
                   { path: 'forms', loadChildren: () => import('./form/form.module').then(m => m.FormModule) },
                   { path: 'bs-element', loadChildren: () => import('./bs-element/bs-element.module').then(m => m.BsElementModule) },
