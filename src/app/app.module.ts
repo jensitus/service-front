@@ -37,7 +37,6 @@ import {FileUploadModule} from 'ng2-file-upload';
 import {FilelistComponent} from './common/upload/filelist/filelist.component';
 
 import {FontAwesomeModule} from '@fortawesome/angular-fontawesome';
-import {DashboardModule} from './admin-template/layout/dashboard/dashboard.module';
 import {SimpleTodoComponent} from './process/simple-todo/simple-todo.component';
 import {ComplexTodoComponent} from './process/complex-todo/complex-todo.component';
 import {DescriptionComponent} from './todo-item/description/add/description.component';
@@ -78,7 +77,7 @@ const app_routes: Routes = [
     AlertModule,
     FileUploadModule,
     FontAwesomeModule,
-    DashboardModule, HomeComponent,
+    HomeComponent,
     LoginComponent,
     RegisterComponent,
     NavbarComponent,
