@@ -5,3 +5,33 @@
 @import "css/rtl";
 @import "css/utils";
 @import "css/global";
+
+/*
+ * ng-bootstrap compatibility shim.
+ *
+ * @ng-bootstrap/ng-bootstrap v21 targets Bootstrap 5, but this theme still ships a
+ * vendored Bootstrap 4.3.1 stylesheet. BS4 keeps `.modal` hidden (display:none) and
+ * `.modal-dialog` non-interactive (pointer-events:none) until its own JS adds `.show`,
+ * which ng-bootstrap never does — so the dialog stays offset/dead while the backdrop
+ * traps the page. These scoped overrides restore a working modal.
+ *
+ * TODO: remove this block once the theme is migrated to Bootstrap 5.
+ */
+ngb-modal-window.modal {
+  display: block;
+  pointer-events: auto;
+  z-index: 1055;
+}
+
+ngb-modal-window .modal-dialog {
+  pointer-events: auto;
+  transform: none;
+}
+
+ngb-modal-window .modal-content {
+  pointer-events: auto;
+}
+
+.modal-backdrop {
+  z-index: 1050;
+}

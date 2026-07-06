@@ -6,60 +6,55 @@ import {catchError} from 'rxjs/operators';
 import {AuthenticationService} from '../../auth/services/authentication.service';
 import {Router} from '@angular/router';
 import {AlertService} from '../../admin-template/layout/components/alert/services/alert.service';
+import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 
 @Injectable()
 export class ErrorInterceptor implements HttpInterceptor {
   constructor(
     private authenticationService: AuthenticationService,
     private router: Router,
-    private alertService: AlertService
+    private alertService: AlertService,
+    private modalService: NgbModal
   ) {
   }
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError(err => {
-      console.log('errorInterceptor:', err);
+      // A 401 with an expired token often has no response body, so err.error can be null.
+      // Read everything from a safe object to avoid throwing inside the handler.
+      const body = err.error ?? {};
       if (err.status === 401 || err.status === 403) {
         // auto logout if 401 or 403 response returned from api
         this.authenticationService.logout();
-        this.alertService.error(err.error.message, true);
+        this.modalService.dismissAll(); // close any open modal so it doesn't linger over the login page
+        this.alertService.error(body.message || 'Your session has expired. Please log in again.', true);
         this.router.navigate(['/login']);
       } else if (err.status === 451) {
-        this.alertService.error(err.error.text);
+        this.alertService.error(body.text);
       } else if (err.status === 404) {
-        this.alertService.error(err.error.message);
+        this.alertService.error(body.message);
       } else if (err.status === 409) {
-        console.log('H A L L O');
         this.alertService.error('err', true); // das pbuli
-      // } else if (err.error.message === 'Error -> Unauthorized') {
-      //   this.router.navigate(['/login']);
       } else if (err.status === 406) {
-        this.alertService.error(err.error.text);
-        //   this.router.navigate(['/login']);
-        // } else if (err.error.message === 'Missing token' || 'Signature has expired') {
-        //   this.authenticationService.logout();
-        //   this.alertService.error('you need to login', true);
-        //   // this.router.navigate(['/login']);
+        this.alertService.error(body.text);
       } else if (err.status === 422) {
-        if (err.error.redirect === true) {
+        if (body.redirect === true) {
           this.router.navigate(['/login']);
         } else {
-          console.log('err.error.text', err.error.text);
-          this.alertService.error(err.error.text, true);
+          this.alertService.error(body.text, true);
         }
       } else if (err.status === 400) {
         // Spring Boot 3.x (RFC 7807): errors[0].detail
         // Spring Boot 2.x: errors[0].defaultMessage
         // Explicit Message responses: err.error.text
-        const msg = err.error?.errors?.[0]?.detail
-          || err.error?.errors?.[0]?.defaultMessage
-          || err.error?.detail
-          || err.error?.text
+        const msg = body.errors?.[0]?.detail
+          || body.errors?.[0]?.defaultMessage
+          || body.detail
+          || body.text
           || 'Bad request';
         this.alertService.error(msg);
       }
 
-      // const error = err.text || err.statusText;
       return throwError(err);
     }));
   }

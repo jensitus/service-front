@@ -1,9 +1,11 @@
 <nav class="sidebar" [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
     <div class="list-group mt-5">
-        <a [routerLink]="['/users', currentUser.username]" [routerLinkActive]="['router-link-active']" class="list-group-item">
-          <fa-icon [icon]="faUser"></fa-icon>&nbsp;
-          <span>{{ currentUser.username }}</span>
-        </a>
+        @if (currentUser) {
+          <a [routerLink]="['/users', currentUser.username]" [routerLinkActive]="['router-link-active']" class="list-group-item">
+            <fa-icon [icon]="faUser"></fa-icon>&nbsp;
+            <span>{{ currentUser.username }}</span>
+          </a>
+        }
         <a routerLink="/dashboard" [routerLinkActive]="['router-link-active']" class="list-group-item">
           <fa-icon [icon]="faTachometerAlt"></fa-icon>&nbsp;
           <span>{{ 'Dashboard' }}</span>
