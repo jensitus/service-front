@@ -1,10 +1,12 @@
+@use "sass:meta";
+@use "css/responsive";
+
 @import "css/bootstrap.min.css";
 @import "styles.css";
-@import "css/responsive";
-@import "css/spinner";
-@import "css/rtl";
-@import "css/utils";
-@import "css/global";
+@include meta.load-css("css/spinner");
+@include meta.load-css("css/rtl");
+@include meta.load-css("css/utils");
+@include meta.load-css("css/global");
 
 /*
  * ng-bootstrap compatibility shim.
