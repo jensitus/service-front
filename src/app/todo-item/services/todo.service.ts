@@ -68,7 +68,7 @@ export class TodoService {
   }
 
   createItemDescription(description: Description, todo_id, item_id, entity) {
-    return this.http.post(`${this.apiUrl}/service/todos/${todo_id}/items/${item_id}/descriptions/create/?entity=${entity}`, description);
+    return this.http.post(`${this.apiUrl}/service/todos/${todo_id}/items/${item_id}/descriptions/create?entity=${entity}`, description);
   }
 
   getItemDescriptions(todo_id, item_id) {
@@ -76,7 +76,7 @@ export class TodoService {
   }
 
   updateItemDescription(todo_id, item_id, description: Description, entity) {
-    this.url = `${this.apiUrl}/service/todos/${todo_id}/items/${item_id}/descriptions/${description.id}/update/?entity=${entity}`;
+    this.url = `${this.apiUrl}/service/todos/${todo_id}/items/${item_id}/descriptions/${description.id}/update?entity=${entity}`;
     return this.http.put(this.url, description);
   }
 
