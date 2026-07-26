@@ -12,14 +12,14 @@
       </span>
     }
     @if (displayItem && display_item_id == item.id) {
-      <div class="mb-2 ml-4" id="{{item.name}}">
+      <div class="mb-2 ms-4" id="{{item.name}}">
         @if (item.done == false) {
           <span class="">
             <small><a class="text-danger" (click)='updateTodoItem(item.id)'>done</a></small>
           </span>
         }
         @if (item.done == true) {
-          <span class="ml-2">
+          <span class="ms-2">
             <small><a (click)='updateTodoItem(item.id)'>undo</a></small>
           </span>
         }

@@ -9,14 +9,23 @@ import { CryptoService } from '../services/crypto.service';
 import { CurrencyPreferenceService, Currency } from '../services/currency-preference.service';
 import { Indicators, PricePoint } from '../models/indicators';
 import { SupportResistance } from '../models/support-resistance';
+import {FaIconComponent} from '@fortawesome/angular-fontawesome';
+import {faArrowLeft} from '@fortawesome/free-solid-svg-icons';
 
 @Component({
   selector: 'app-coin-detail',
   templateUrl: './coin-detail.component.html',
   styleUrls: ['./coin-detail.component.css'],
-  imports: [CommonModule, FormsModule, RouterModule, BaseChartDirective]
+  imports: [CommonModule, FormsModule, RouterModule, BaseChartDirective, FaIconComponent]
 })
 export class CoinDetailComponent implements OnInit, OnDestroy {
+
+  constructor(
+    private route: ActivatedRoute,
+    private cryptoService: CryptoService,
+    private cdr: ChangeDetectorRef,
+    public currencyPref: CurrencyPreferenceService
+  ) {}
 
   coinId: string;
   indicators: Indicators = null;
@@ -26,6 +35,7 @@ export class CoinDetailComponent implements OnInit, OnDestroy {
   selectedHours = 24;
   currency: Currency = 'EUR';
   private currencySub: Subscription;
+  protected readonly faArrowLeft = faArrowLeft;
 
   chartData: ChartConfiguration<'line'>['data'] = { labels: [], datasets: [] };
   chartOptions: ChartConfiguration<'line'>['options'] = {
@@ -47,19 +57,18 @@ export class CoinDetailComponent implements OnInit, OnDestroy {
     }
   };
 
-  constructor(
-    private route: ActivatedRoute,
-    private cryptoService: CryptoService,
-    private cdr: ChangeDetectorRef,
-    public currencyPref: CurrencyPreferenceService
-  ) {}
+  coinNames: Record<string, string> = {
+    bitcoin: 'Bitcoin', litecoin: 'Litecoin', ethereum: 'Ethereum', ripple: 'XRP'
+  };
 
   ngOnInit() {
     this.coinId = this.route.snapshot.paramMap.get('coinId');
     this.currency = this.currencyPref.current;
     this.currencySub = this.currencyPref.currency$.subscribe(c => {
       this.currency = c;
-      if (this.history.length) this.buildChart(this.history);
+      if (this.history.length) {
+        this.buildChart(this.history);
+      }
       this.cdr.detectChanges();
     });
     this.load();
@@ -95,10 +104,7 @@ export class CoinDetailComponent implements OnInit, OnDestroy {
   buildChart(points: PricePoint[]) {
     const isEur = this.currency === 'EUR';
     const sym = isEur ? '€' : '$';
-    const labels = points.map(p => {
-      const d = new Date(p.recordedAt);
-      return `${d.getHours().toString().padStart(2,'0')}:${d.getMinutes().toString().padStart(2,'0')}`;
-    });
+    const labels = points.map(p => this.formatLabel(new Date(p.recordedAt)));
     const prices = points.map(p => Number(isEur && p.priceEur != null ? p.priceEur : p.priceUsd));
 
     const datasets: ChartConfiguration<'line'>['data']['datasets'] = [
@@ -175,42 +181,56 @@ export class CoinDetailComponent implements OnInit, OnDestroy {
     this.chartData = { labels, datasets };
   }
 
+  /**
+   * X-axis label format depends on the selected range:
+   *  - intraday (≤ 24h): time only (HH:MM)
+   *  - a few days (≤ 72h): date + time (DD.MM HH:MM), so day boundaries are visible
+   *  - a week (> 72h): date only (DD.MM)
+   */
+  private formatLabel(d: Date): string {
+    const hh = d.getHours().toString().padStart(2, '0');
+    const mm = d.getMinutes().toString().padStart(2, '0');
+    const dd = d.getDate().toString().padStart(2, '0');
+    const mo = (d.getMonth() + 1).toString().padStart(2, '0');
+    if (this.selectedHours <= 24) { return `${hh}:${mm}`; }
+    if (this.selectedHours <= 72) { return `${dd}.${mo} ${hh}:${mm}`; }
+    return `${dd}.${mo}`;
+  }
+
   private movingAverage(data: number[], period: number): (number | null)[] {
     return data.map((_, i) => {
-      if (i < period - 1) return null;
+      if (i < period - 1) { return null; }
       const window = data.slice(i - period + 1, i + 1);
       return window.reduce((a, b) => a + b, 0) / period;
     });
   }
 
   rsiClass(): string {
-    if (!this.indicators?.rsiSignal) return 'text-muted';
-    if (this.indicators.rsiSignal === 'OVERSOLD') return 'text-success fw-bold';
-    if (this.indicators.rsiSignal === 'OVERBOUGHT') return 'text-danger fw-bold';
+    if (!this.indicators?.rsiSignal) { return 'text-muted'; }
+    if (this.indicators.rsiSignal === 'OVERSOLD') { return 'text-success fw-bold'; }
+    if (this.indicators.rsiSignal === 'OVERBOUGHT') { return 'text-danger fw-bold'; }
     return 'text-warning';
   }
 
   maClass(): string {
-    if (!this.indicators?.maSignal) return 'text-muted';
+    if (!this.indicators?.maSignal) { return 'text-muted'; }
     return this.indicators.maSignal === 'BULLISH' ? 'text-success fw-bold' : 'text-danger fw-bold';
   }
 
   srPosition(): number {
-    if (!this.sr?.nearestSupport || !this.sr?.nearestResistance) return 50;
+    if (!this.sr?.nearestSupport || !this.sr?.nearestResistance) { return 50; }
     const range = Number(this.sr.nearestResistance) - Number(this.sr.nearestSupport);
-    if (range === 0) return 50;
+    if (range === 0) { return 50; }
     const pos = (Number(this.sr.currentPrice) - Number(this.sr.nearestSupport)) / range * 100;
     return Math.min(100, Math.max(0, pos));
   }
 
   srPositionLabel(): string {
     const pct = this.srPosition();
-    if (pct < 25) return 'Close to support — price near a floor';
-    if (pct > 75) return 'Close to resistance — price near a ceiling';
+    if (pct < 25) { return 'Close to support — price near a floor'; }
+    if (pct > 75) { return 'Close to resistance — price near a ceiling'; }
     return 'Mid-range between support and resistance';
   }
 
-  coinNames: Record<string,string> = {
-    bitcoin: 'Bitcoin', litecoin: 'Litecoin', ethereum: 'Ethereum', ripple: 'XRP'
-  };
+
 }

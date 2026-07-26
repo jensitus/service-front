@@ -1,5 +1,5 @@
 <form [formGroup]="descriptionUpdateForm" (ngSubmit)="onDescriptionUpdateSubmit(item.id)">
-  <div class="form-group">
+  <div class="mb-3">
     <textarea class="form-control" formControlName="text" cols="40" autoResize="autoResize"
       placeholder="description"
     [ngClass]="{ 'is-invalid': submitted && up.text.errors }"></textarea>

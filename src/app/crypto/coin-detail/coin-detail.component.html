@@ -2,10 +2,10 @@
   <div class="container-fluid mt-3">
     <div class="d-flex align-items-center gap-2 mb-3">
       <a routerLink="/crypto/prices" class="btn btn-sm btn-outline-secondary">
-        <i class="fa fa-arrow-left"></i>
+        <fa-icon [icon]="faArrowLeft"></fa-icon>
       </a>
-      <h4 class="mb-0">{{ coinNames[coinId] || coinId }} Detail</h4>
-      <div class="ms-auto d-flex gap-2 align-items-center">
+      <h4 class="mb-0 ms-2">{{ coinNames[coinId] || coinId }} Detail</h4>
+      <div class="ms-auto d-flex gap-2 align-items-center ms-2">
         <!-- Currency toggle -->
         <div class="btn-group btn-group-sm">
           <button type="button" class="btn"
@@ -17,7 +17,9 @@
             [class.btn-outline-primary]="currency !== 'USD'"
           (click)="currencyPref.set('USD')">$ USD</button>
         </div>
-        <select class="form-select form-select-sm" [(ngModel)]="selectedHours" (change)="load()">
+        <select class="form-select form-select-sm w-auto"
+                [(ngModel)]="selectedHours"
+                (change)="load()">
           <option [value]="6">Last 6 hours</option>
           <option [value]="24">Last 24 hours</option>
           <option [value]="72">Last 3 days</option>

@@ -27,6 +27,8 @@
     "@ngrx/signals": "^21.1.1",
     "@ngx-translate/core": "^18.0.0",
     "@ngx-translate/http-loader": "^18.0.0",
+    "@popperjs/core": "^2.11.8",
+    "bootstrap": "^5.3.8",
     "chart.js": "^4.4.0",
     "core-js": "^3.32.2",
     "ng2-charts": "^10.0.0",
